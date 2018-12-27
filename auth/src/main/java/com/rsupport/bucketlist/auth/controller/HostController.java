@@ -5,6 +5,8 @@ import com.rsupport.bucketlist.auth.vo.BucketlistViewRequestVO;
 import com.rsupport.bucketlist.auth.vo.BucketlistViewResponseVO;
 import com.rsupport.bucketlist.auth.vo.HostHomeRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostHomeResponseVO;
+import com.rsupport.bucketlist.auth.vo.MyPageRequestVO;
+import com.rsupport.bucketlist.auth.vo.MyPageResponseVO;
 import com.rsupport.bucketlist.core.exception.InvalidTokenException;
 import com.rsupport.bucketlist.core.util.JwtUtils;
 import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
@@ -31,13 +33,13 @@ import java.util.List;
 public class HostController {
 
   @Autowired
+  private JwtUtils jwtUtils;
+
+  @Autowired
   private UserManager userManager;
 
   @Autowired
   private BucketlistManager bucketlistManager;
-
-  @Autowired
-  private JwtUtils jwtUtils;
 
   @GetMapping(value = ApiUriConstants.HOST_SIGNUP_CHECK)
   public HostSignupCheckResponseVO signupCheck(HostSignupCheckRequestVO requestVO) {
@@ -91,18 +93,9 @@ public class HostController {
     return BaseResponseVO.ok();
   }
 
-  /*@GetMapping(value = ApiUriConstants.HOST_RANKING)
-  public RankingResponseVO ranking() {
-  
-  }
-  
-  @GetMapping(value = ApiUriConstants.HOST_SEARCH)
-  public void search() {
-  
-  }
-  
   @GetMapping(value = ApiUriConstants.HOST_MYPAGE)
-  public MyPageResponseVO mypage() {
-  
-  }*/
+  public MyPageResponseVO mypage(MyPageRequestVO requstVO) {
+    User user = userManager.getUserById(requstVO.getUserId());
+    return new MyPageResponseVO(user);
+  }
 }
