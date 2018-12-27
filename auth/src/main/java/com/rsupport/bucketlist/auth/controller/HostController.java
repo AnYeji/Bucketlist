@@ -3,12 +3,11 @@ package com.rsupport.bucketlist.auth.controller;
 import com.rsupport.bucketlist.auth.constants.ApiUriConstants;
 import com.rsupport.bucketlist.auth.vo.HostHomeRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostHomeResponseVO;
-import com.rsupport.bucketlist.auth.vo.HostSigninRequestVO;
+import com.rsupport.bucketlist.core.util.JwtUtils;
+import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostSigninResponseVO;
 import com.rsupport.bucketlist.auth.vo.HostSignupCheckRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostSignupCheckResponseVO;
-import com.rsupport.bucketlist.auth.vo.MyPageResponseVO;
-import com.rsupport.bucketlist.auth.vo.RankingResponseVO;
 import com.rsupport.bucketlist.core.base.BaseResponseVO;
 import com.rsupport.bucketlist.core.domain.User;
 import com.rsupport.bucketlist.core.vo.HostSignupRequestVO;
@@ -34,20 +33,29 @@ public class HostController {
   @Autowired
   private BucketlistManager bucketlistManager;
 
+  @Autowired
+  private JwtUtils jwtUtils;
+
   @GetMapping(value = ApiUriConstants.HOST_SIGNUP_CHECK)
-  public HostSignupCheckResponseVO signupCheck(HostSignupCheckRequestVO requestVO){
-    return new HostSignupCheckResponseVO();
+  public HostSignupCheckResponseVO signupCheck(HostSignupCheckRequestVO requestVO) {
+    User user = userManager.getUserByUserId(requestVO.getUserId());
+    boolean signuped = (user != null);
+    return new HostSignupCheckResponseVO(signuped);
   }
 
   @PostMapping(value = ApiUriConstants.HOST_SIGNUP)
   public HostSignupResponseVO signup(HostSignupRequestVO requestVO) {
     User user = userManager.signup(requestVO);
-    return new HostSignupResponseVO();
+    return new HostSignupResponseVO(user);
   }
 
   @GetMapping(value = ApiUriConstants.HOST_SIGNIN)
-  public HostSigninResponseVO signin(HostSigninRequestVO requestVO){
-    return new HostSigninResponseVO();
+  public HostSigninResponseVO signin(HostSigninRequestVO requestVO) {
+    User user = userManager.signin(requestVO);
+
+    String accessToken = jwtUtils.createAccessToken(user.getEmail());
+    String refreshToken = jwtUtils.createRefreshToken(accessToken);
+    return new HostSigninResponseVO(accessToken, refreshToken);
   }
 
   @GetMapping(value = ApiUriConstants.HOST_HOME)

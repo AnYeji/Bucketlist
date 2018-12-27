@@ -36,7 +36,8 @@ public class User {
   @Column(name = "update_dt")
   private Date updatedDate;
 
-  @Column(name = "token")
-  private String token;
+  @Column(name = "logined_dt")
+  private Date loginedDate;
 
+  private boolean enabled;
 }
