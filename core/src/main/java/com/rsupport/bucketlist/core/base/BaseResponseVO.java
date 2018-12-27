@@ -1,7 +1,7 @@
 package com.rsupport.bucketlist.core.base;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.rsupport.bucketlist.core.constants.ReturnCodes;
+import com.rsupport.bucketlist.core.constants.ApiReturnCodes;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +16,7 @@ public class BaseResponseVO {
   protected String message;
 
   public static BaseResponseVO ok() {
-    return new BaseResponseVO(ReturnCodes.OK);
+    return new BaseResponseVO(ApiReturnCodes.OK);
   }
 
   public BaseResponseVO(String returnCode) {

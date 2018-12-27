@@ -6,13 +6,9 @@ import com.rsupport.bucketlist.core.vo.HostSignupRequestVO;
 
 public interface UserManager {
 
-  User getUserByUserId(String userId);
+  User getUserById(String userId);
 
   User signup(HostSignupRequestVO requestVO);
-
-  User getUserByToken(String token);
-
-  User saveUser(User user);
 
   User signin(HostSigninRequestVO requestVO);
 }

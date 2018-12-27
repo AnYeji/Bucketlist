@@ -19,6 +19,11 @@ public class BucketlistManagerImpl implements BucketlistManager {
   }
 
   @Override
+  public Bucketlist getBucketlistById(String bucketlistId) {
+    return bucketlistRepository.getOne(bucketlistId);
+  }
+
+  @Override
   public Bucketlist saveBucketlist(Bucketlist bucketlist) {
     return bucketlistRepository.save(bucketlist);
   }
@@ -27,4 +32,5 @@ public class BucketlistManagerImpl implements BucketlistManager {
   public void deleteBucketlist(String bucketlistId) {
 
   }
+
 }

@@ -2,8 +2,7 @@ package com.rsupport.bucketlist.auth.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rsupport.bucketlist.core.base.BaseResponseVO;
-import com.rsupport.bucketlist.core.constants.ReturnCodes;
-import com.rsupport.bucketlist.core.domain.User;
+import com.rsupport.bucketlist.core.constants.ApiReturnCodes;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +17,7 @@ public class HostSigninResponseVO extends BaseResponseVO{
   private String refreshToken;
 
   public HostSigninResponseVO(String accessToken, String refreshToken){
-    super(ReturnCodes.OK);
+    super(ApiReturnCodes.OK);
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
   }

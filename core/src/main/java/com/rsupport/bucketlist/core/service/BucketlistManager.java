@@ -8,7 +8,10 @@ public interface BucketlistManager {
 
   List<Bucketlist> getBucketlistsByUserId(String userId);
 
+  Bucketlist getBucketlistById(String bucketlistId);
+
   Bucketlist saveBucketlist(Bucketlist bucketlist);
 
   void deleteBucketlist(String bucketlistId);
+
 }

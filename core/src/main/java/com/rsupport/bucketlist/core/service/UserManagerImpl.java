@@ -16,7 +16,7 @@ public class UserManagerImpl implements UserManager {
   private UserRepository userRepository;
 
   @Override
-  public User getUserByUserId(String userId) {
+  public User getUserById(String userId) {
     return userRepository.getOne(userId);
   }
 
@@ -25,17 +25,6 @@ public class UserManagerImpl implements UserManager {
   public User signup(HostSignupRequestVO requestVO) {
     User user = new User();
     user.setEmail(requestVO.getEmail());
-    return userRepository.save(user);
-  }
-
-  @Override
-  public User getUserByToken(String token) {
-    return userRepository.getUserByToken(token);
-  }
-
-  @Override
-  @Transactional
-  public User saveUser(User user) {
     return userRepository.save(user);
   }
 

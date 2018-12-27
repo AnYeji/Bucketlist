@@ -1,7 +1,7 @@
 package com.rsupport.bucketlist.auth.vo;
 
 import com.rsupport.bucketlist.core.base.BaseResponseVO;
-import com.rsupport.bucketlist.core.constants.ReturnCodes;
+import com.rsupport.bucketlist.core.constants.ApiReturnCodes;
 import com.rsupport.bucketlist.core.domain.Bucketlist;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +19,7 @@ public class HostHomeResponseVO extends BaseResponseVO {
   }
 
   public HostHomeResponseVO(List<Bucketlist> bucketlists){
-    super(ReturnCodes.OK);
+    super(ApiReturnCodes.OK);
     this.bucketlists = bucketlists;
   }
 

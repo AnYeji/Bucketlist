@@ -1,8 +1,11 @@
 package com.rsupport.bucketlist.auth.controller;
 
 import com.rsupport.bucketlist.auth.constants.ApiUriConstants;
+import com.rsupport.bucketlist.auth.vo.BucketlistViewRequestVO;
+import com.rsupport.bucketlist.auth.vo.BucketlistViewResponseVO;
 import com.rsupport.bucketlist.auth.vo.HostHomeRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostHomeResponseVO;
+import com.rsupport.bucketlist.core.exception.InvalidTokenException;
 import com.rsupport.bucketlist.core.util.JwtUtils;
 import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostSigninResponseVO;
@@ -38,7 +41,7 @@ public class HostController {
 
   @GetMapping(value = ApiUriConstants.HOST_SIGNUP_CHECK)
   public HostSignupCheckResponseVO signupCheck(HostSignupCheckRequestVO requestVO) {
-    User user = userManager.getUserByUserId(requestVO.getUserId());
+    User user = userManager.getUserById(requestVO.getUserId());
     boolean signuped = (user != null);
     return new HostSignupCheckResponseVO(signuped);
   }
@@ -60,15 +63,21 @@ public class HostController {
 
   @GetMapping(value = ApiUriConstants.HOST_HOME)
   public HostHomeResponseVO home(HostHomeRequestVO requestVO) {
-    User user = userManager.getUserByToken(requestVO.getToken());
+    User user = userManager.getUserById(requestVO.getUserId());
+
+    boolean isValidToken = jwtUtils.isValidAccessToken(requestVO.getToken(), user.getEmail());
+    if (!isValidToken)
+      throw new InvalidTokenException();
+
     List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId(user.getId());
     return new HostHomeResponseVO(bucketlists);
   }
 
-  /*@GetMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
-  public Bucketlist getBucketlist() {
-  
-  }*/
+  @GetMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
+  public BucketlistViewResponseVO getBucketlist(BucketlistViewRequestVO requestVO) {
+    Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
+    return new BucketlistViewResponseVO(bucketlist);
+  }
 
   @PostMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
   public BaseResponseVO saveBucketlist(Bucketlist bucketlist) {

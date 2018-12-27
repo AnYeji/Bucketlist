@@ -2,7 +2,7 @@ package com.rsupport.bucketlist.core.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rsupport.bucketlist.core.base.BaseResponseVO;
-import com.rsupport.bucketlist.core.constants.ReturnCodes;
+import com.rsupport.bucketlist.core.constants.ApiReturnCodes;
 import com.rsupport.bucketlist.core.domain.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ public class HostSignupResponseVO extends BaseResponseVO {
   private String userId;
 
   public HostSignupResponseVO(User user) {
-    super(ReturnCodes.OK);
+    super(ApiReturnCodes.OK);
     this.userId = userId;
   }
 }
