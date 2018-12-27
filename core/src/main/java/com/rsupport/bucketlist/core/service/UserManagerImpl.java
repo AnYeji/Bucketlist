@@ -25,6 +25,7 @@ public class UserManagerImpl implements UserManager {
   public User signup(HostSignupRequestVO requestVO) {
     User user = new User();
     user.setEmail(requestVO.getEmail());
+    user.setAccountType(requestVO.getAccountType());
     return userRepository.save(user);
   }
 

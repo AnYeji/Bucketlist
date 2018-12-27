@@ -9,6 +9,7 @@ import com.rsupport.bucketlist.auth.vo.MyPageRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageResponseVO;
 import com.rsupport.bucketlist.core.exception.InvalidTokenException;
 import com.rsupport.bucketlist.core.util.JwtUtils;
+import com.rsupport.bucketlist.core.util.ParameterUtil;
 import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostSigninResponseVO;
 import com.rsupport.bucketlist.auth.vo.HostSignupCheckRequestVO;
@@ -43,6 +44,8 @@ public class HostController {
 
   @GetMapping(value = ApiUriConstants.HOST_SIGNUP_CHECK)
   public HostSignupCheckResponseVO signupCheck(HostSignupCheckRequestVO requestVO) {
+    ParameterUtil.checkParameter(requestVO.getUserId());
+
     User user = userManager.getUserById(requestVO.getUserId());
     boolean signuped = (user != null);
     return new HostSignupCheckResponseVO(signuped);
@@ -50,14 +53,17 @@ public class HostController {
 
   @PostMapping(value = ApiUriConstants.HOST_SIGNUP)
   public HostSignupResponseVO signup(HostSignupRequestVO requestVO) {
+    ParameterUtil.checkParameter(requestVO.getEmail(), requestVO.getAccountType());
+
     User user = userManager.signup(requestVO);
     return new HostSignupResponseVO(user);
   }
 
   @GetMapping(value = ApiUriConstants.HOST_SIGNIN)
   public HostSigninResponseVO signin(HostSigninRequestVO requestVO) {
-    User user = userManager.signin(requestVO);
+    ParameterUtil.checkParameter(requestVO.getUserId());
 
+    User user = userManager.signin(requestVO);
     String accessToken = jwtUtils.createAccessToken(user.getEmail());
     String refreshToken = jwtUtils.createRefreshToken(accessToken);
     return new HostSigninResponseVO(accessToken, refreshToken);
@@ -65,8 +71,9 @@ public class HostController {
 
   @GetMapping(value = ApiUriConstants.HOST_HOME)
   public HostHomeResponseVO home(HostHomeRequestVO requestVO) {
-    User user = userManager.getUserById(requestVO.getUserId());
+    ParameterUtil.checkParameter(requestVO.getUserId(), requestVO.getToken());
 
+    User user = userManager.getUserById(requestVO.getUserId());
     boolean isValidToken = jwtUtils.isValidAccessToken(requestVO.getToken(), user.getEmail());
     if (!isValidToken)
       throw new InvalidTokenException();
@@ -77,24 +84,32 @@ public class HostController {
 
   @GetMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
   public BucketlistViewResponseVO getBucketlist(BucketlistViewRequestVO requestVO) {
+    ParameterUtil.checkParameter(requestVO.getBucketlistId());
+
     Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
     return new BucketlistViewResponseVO(bucketlist);
   }
 
   @PostMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
   public BaseResponseVO saveBucketlist(Bucketlist bucketlist) {
+    ParameterUtil.checkParameter(bucketlist);
+
     bucketlistManager.saveBucketlist(bucketlist);
     return BaseResponseVO.ok();
   }
 
   @DeleteMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
   public BaseResponseVO deleteBucketlist(@PathVariable String bucketlistId) {
+    ParameterUtil.checkParameter(bucketlistId);
+
     bucketlistManager.deleteBucketlist(bucketlistId);
     return BaseResponseVO.ok();
   }
 
   @GetMapping(value = ApiUriConstants.HOST_MYPAGE)
   public MyPageResponseVO mypage(MyPageRequestVO requstVO) {
+    ParameterUtil.checkParameter(requstVO.getUserId());
+
     User user = userManager.getUserById(requstVO.getUserId());
     return new MyPageResponseVO(user);
   }
