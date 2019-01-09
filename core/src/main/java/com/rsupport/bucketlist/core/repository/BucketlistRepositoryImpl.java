@@ -4,6 +4,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 import com.rsupport.bucketlist.core.domain.Bucketlist;
 import com.rsupport.bucketlist.core.domain.QBucketlist;
 import com.rsupport.bucketlist.core.domain.QUser;
+import com.rsupport.bucketlist.core.util.DateUtil;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -24,5 +25,15 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
 
     query.from(user).join(bucketlist).where(user.id.eq(userId));
     return query.list(bucketlist);
+  }
+
+  @Override
+  public boolean existsLessThanThreeDaysBucketlist(String userId) {
+    JPAQuery query = new JPAQuery(entityManager);
+    QUser user = QUser.user;
+    QBucketlist bucketlist = QBucketlist.bucketlist;
+
+    query.from(user).join(bucketlist).where(user.id.eq(userId).and(bucketlist.dDay.loe(DateUtil.addDays(DateUtil.getDate(), 3))));
+    return query.exists();
   }
 }

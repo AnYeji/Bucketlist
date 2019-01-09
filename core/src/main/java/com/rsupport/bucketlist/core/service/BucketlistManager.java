@@ -8,6 +8,8 @@ public interface BucketlistManager {
 
   List<Bucketlist> getBucketlistsByUserId(String userId);
 
+  boolean existsPopupBucketlist(String userId);
+
   Bucketlist getBucketlistById(String bucketlistId);
 
   Bucketlist saveBucketlist(Bucketlist bucketlist);

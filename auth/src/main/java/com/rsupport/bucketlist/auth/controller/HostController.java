@@ -79,7 +79,8 @@ public class HostController {
       throw new InvalidTokenException();
 
     List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId(user.getId());
-    return new HostHomeResponseVO(bucketlists);
+    boolean popupYn = bucketlistManager.existsPopupBucketlist(user.getId());
+    return new HostHomeResponseVO(bucketlists, popupYn);
   }
 
   @GetMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)

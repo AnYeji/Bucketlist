@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface BucketlistRepositoryCustom {
 
-    List<Bucketlist> getBucketlistsByUserId(String userId);
+  List<Bucketlist> getBucketlistsByUserId(String userId);
+
+  boolean existsLessThanThreeDaysBucketlist(String userId);
 }

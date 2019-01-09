@@ -19,6 +19,11 @@ public class BucketlistManagerImpl implements BucketlistManager {
   }
 
   @Override
+  public boolean existsPopupBucketlist(String userId) {
+    return bucketlistRepository.existsLessThanThreeDaysBucketlist(userId);
+  }
+
+  @Override
   public Bucketlist getBucketlistById(String bucketlistId) {
     return bucketlistRepository.getOne(bucketlistId);
   }

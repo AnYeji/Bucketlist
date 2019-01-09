@@ -14,13 +14,16 @@ public class HostHomeResponseVO extends BaseResponseVO {
 
   private List<Bucketlist> bucketlists;
 
+  private boolean popupYn;
+
   public HostHomeResponseVO(String returnCode) {
     super(returnCode);
   }
 
-  public HostHomeResponseVO(List<Bucketlist> bucketlists){
+  public HostHomeResponseVO(List<Bucketlist> bucketlists, boolean popupYn) {
     super(ApiReturnCodes.OK);
     this.bucketlists = bucketlists;
+    this.popupYn = popupYn;
   }
 
 }

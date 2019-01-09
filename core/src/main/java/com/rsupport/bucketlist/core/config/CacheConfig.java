@@ -20,25 +20,25 @@ import org.springframework.lang.Nullable;
 @EnableCaching
 public class CacheConfig implements CachingConfigurer {
 
-  @Nullable
-  @Override
+  public static final String EHCACHE_MANAGER_NAME = "ehCacheSpringManager";
+
+  public static final String REFRESH_TOKEN = "refreshToken";
+
+  @Bean(EHCACHE_MANAGER_NAME)
   public CacheManager cacheManager() {
     return new EhCacheCacheManager(ehCacheManager().getObject());
   }
 
-  @Nullable
   @Override
   public CacheResolver cacheResolver() {
     return new SimpleCacheResolver();
   }
 
-  @Nullable
   @Override
   public KeyGenerator keyGenerator() {
     return new SimpleKeyGenerator();
   }
 
-  @Nullable
   @Override
   public CacheErrorHandler errorHandler() {
     return new SimpleCacheErrorHandler();
