@@ -71,15 +71,17 @@ public class HostController {
 
   @GetMapping(value = ApiUriConstants.HOST_HOME)
   public HostHomeResponseVO home(HostHomeRequestVO requestVO) {
-    ParameterUtil.checkParameter(requestVO.getUserId(), requestVO.getToken());
+    /*ParameterUtil.checkParameter(requestVO.getUserId(), requestVO.getToken());
 
     User user = userManager.getUserById(requestVO.getUserId());
     boolean isValidToken = jwtUtils.isValidAccessToken(requestVO.getToken(), user.getEmail());
     if (!isValidToken)
       throw new InvalidTokenException();
 
-    List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId(user.getId());
-    boolean popupYn = bucketlistManager.existsPopupBucketlist(user.getId());
+    List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId(user.getId());*/
+    List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId("user1");
+    /*boolean popupYn = bucketlistManager.existsPopupBucketlist(user.getId());*/
+    boolean popupYn =false;
     return new HostHomeResponseVO(bucketlists, popupYn);
   }
 

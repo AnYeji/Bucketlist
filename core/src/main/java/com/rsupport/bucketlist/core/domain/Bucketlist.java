@@ -1,6 +1,7 @@
 package com.rsupport.bucketlist.core.domain;
 
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
 
@@ -28,13 +30,16 @@ public class Bucketlist {
   private String id;
 
   @Lob
+  @Column(nullable = false)
   private String title;
 
+  @ColumnDefault("0")
   private boolean open;
 
   private boolean status;
 
-  private int category;
+  @OneToOne
+  private Category category;
 
   @Column(name = "d_day")
   private Date dDay;

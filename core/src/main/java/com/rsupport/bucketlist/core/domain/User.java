@@ -26,6 +26,9 @@ public class User {
   @Column(name = "account_type")
   private int accountType;
 
+  @Column(name = "nick_name")
+  private String nickName;
+
   @Column(name = "image_url")
   private String imageUrl;
 
