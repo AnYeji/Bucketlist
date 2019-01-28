@@ -12,8 +12,10 @@ import java.util.List;
 @Setter
 public class HostHomeResponseVO extends BaseResponseVO {
 
+  @JsonProperty
   private List<Bucketlist> bucketlists;
 
+  @JsonProperty
   private boolean popupYn;
 
   public HostHomeResponseVO(String returnCode) {

@@ -79,9 +79,9 @@ public class HostController {
       throw new InvalidTokenException();
 
     List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId(user.getId());*/
-    List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId("user1");
+    List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId("user01");
     /*boolean popupYn = bucketlistManager.existsPopupBucketlist(user.getId());*/
-    boolean popupYn =false;
+    boolean popupYn = false;
     return new HostHomeResponseVO(bucketlists, popupYn);
   }
 

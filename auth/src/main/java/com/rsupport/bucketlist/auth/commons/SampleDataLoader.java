@@ -33,6 +33,7 @@ public class SampleDataLoader implements ApplicationRunner {
     bucketlist.setCategory(category);
 
     User user = new User();
+    user.setId("user01");
     user.setNickName("아여니");
     bucketlist.setUser(user);
     bucketlistRepository.save(bucketlist);
