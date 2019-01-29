@@ -19,8 +19,8 @@ import java.util.List;
 public class User {
 
   @Id
-  @GenericGenerator(name = "system-uuid", strategy = "uuid")
-  @GeneratedValue(generator = "system-uuid")
+  /*@GenericGenerator(name = "system-uuid", strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")*/
   private String id;
 
   private String email;
@@ -37,7 +37,6 @@ public class User {
   @Column(name = "created_dt")
   private Date createdDate;
 
-  @NotAudited
   @Column(name = "update_dt")
   private Date updatedDate;
 
