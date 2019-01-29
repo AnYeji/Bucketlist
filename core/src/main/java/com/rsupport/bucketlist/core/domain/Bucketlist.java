@@ -20,7 +20,6 @@ import java.util.Date;
 
 @Data
 @Entity
-@Audited
 @Table(name = "mt_bucketlist")
 public class Bucketlist {
 
@@ -67,7 +66,6 @@ public class Bucketlist {
 
   @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id")
-  @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
   private User user;
 
 }

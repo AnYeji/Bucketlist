@@ -1,6 +1,5 @@
 package com.rsupport.bucketlist.core.repository;
 
-import com.rsupport.bucketlist.core.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;

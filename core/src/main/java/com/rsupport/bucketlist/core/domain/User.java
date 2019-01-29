@@ -46,6 +46,6 @@ public class User {
 
   private boolean enabled;
 
-  @OneToMany(mappedBy = "category")
+  @OneToMany
   private List<Category> categories;
 }

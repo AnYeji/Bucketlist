@@ -1,5 +1,6 @@
 package com.rsupport.bucketlist.auth.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rsupport.bucketlist.core.base.BaseResponseVO;
 import com.rsupport.bucketlist.core.constants.ApiReturnCodes;
 import com.rsupport.bucketlist.core.domain.Bucketlist;

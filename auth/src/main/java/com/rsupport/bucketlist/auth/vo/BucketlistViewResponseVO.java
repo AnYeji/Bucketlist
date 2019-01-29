@@ -20,7 +20,7 @@ public class BucketlistViewResponseVO extends BaseResponseVO {
   private boolean open;
 
   @JsonProperty("category")
-  private int category;
+  private String category;
 
   @JsonProperty("d_day")
   private Date dDay;
@@ -44,7 +44,7 @@ public class BucketlistViewResponseVO extends BaseResponseVO {
     super(ApiReturnCodes.OK);
     this.title = bucketlist.getTitle();
     this.open = bucketlist.isOpen();
-    this.category = bucketlist.getCategory();
+    this.category = bucketlist.getCategory().getName();
     this.dDay = bucketlist.getDDay();
     this.count = bucketlist.getCount();
     this.memo = bucketlist.getMemo();
