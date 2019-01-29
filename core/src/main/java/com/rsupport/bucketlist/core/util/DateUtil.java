@@ -9,6 +9,17 @@ public class DateUtil {
     return new Date();
   }
 
+  private static long getDateDiff(Date source, Date target) {
+    return source.getTime() - target.getTime();
+  }
+
+  public static int getDateDiffDay(Date source, Date target) {
+    int evalDay = 1000 * 60 * 60 * 24;
+    long diffTime = getDateDiff(source, target);
+    return (int)(diffTime / evalDay);
+  }
+
+
   public static Date addDays(Date date, int amount) {
     Calendar c = Calendar.getInstance();
     c.setTime(date);

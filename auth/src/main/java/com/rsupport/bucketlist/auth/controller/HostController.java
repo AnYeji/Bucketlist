@@ -8,6 +8,7 @@ import com.rsupport.bucketlist.auth.vo.HostHomeResponseVO;
 import com.rsupport.bucketlist.auth.vo.MyPageRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageResponseVO;
 import com.rsupport.bucketlist.core.exception.InvalidTokenException;
+import com.rsupport.bucketlist.core.util.DateUtil;
 import com.rsupport.bucketlist.core.util.JwtUtils;
 import com.rsupport.bucketlist.core.util.ParameterUtil;
 import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -80,6 +82,9 @@ public class HostController {
 
     List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId(user.getId());*/
     List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId("user01");
+    for(Bucketlist bucketlist : bucketlists){
+      bucketlist.setDDay(DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getDate()));
+    }
     /*boolean popupYn = bucketlistManager.existsPopupBucketlist(user.getId());*/
     boolean popupYn = false;
     return new HostHomeResponseVO(bucketlists, popupYn);

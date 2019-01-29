@@ -1,5 +1,6 @@
 package com.rsupport.bucketlist.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.envers.NotAudited;
@@ -16,6 +17,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "mt_user")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
 
   @Id

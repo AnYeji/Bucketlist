@@ -1,5 +1,7 @@
 package com.rsupport.bucketlist.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -13,6 +15,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "mt_category")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Category {
 
   @Id
@@ -20,6 +23,7 @@ public class Category {
   @GeneratedValue(generator = "system-uuid")
   private String id;
 
+  @JsonProperty
   private String name;
 
   @ManyToOne

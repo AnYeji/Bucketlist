@@ -20,10 +20,9 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
   @Override
   public List<Bucketlist> getBucketlistsByUserId(String userId) {
     JPAQuery query = new JPAQuery(entityManager);
-    QUser user = QUser.user;
     QBucketlist bucketlist = QBucketlist.bucketlist;
 
-    query.from(user).join(bucketlist).where(user.id.eq(userId));
+    query.from(bucketlist).where(bucketlist.user().id.eq(userId));
     return query.list(bucketlist);
   }
 
@@ -33,7 +32,7 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
     QUser user = QUser.user;
     QBucketlist bucketlist = QBucketlist.bucketlist;
 
-    query.from(user).join(bucketlist).where(user.id.eq(userId).and(bucketlist.dDay.loe(DateUtil.addDays(DateUtil.getDate(), 3))));
+    query.from(user).join(bucketlist).where(user.id.eq(userId).and(bucketlist.dDate.loe(DateUtil.addDays(DateUtil.getDate(), 3))));
     return query.exists();
   }
 }
