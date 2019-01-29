@@ -3,6 +3,8 @@ package com.rsupport.bucketlist.auth.controller;
 import com.rsupport.bucketlist.auth.constants.ApiUriConstants;
 import com.rsupport.bucketlist.auth.vo.BucketlistViewRequestVO;
 import com.rsupport.bucketlist.auth.vo.BucketlistViewResponseVO;
+import com.rsupport.bucketlist.auth.vo.HostDDayRequestVO;
+import com.rsupport.bucketlist.auth.vo.HostDDayResponseVO;
 import com.rsupport.bucketlist.auth.vo.HostHomeCompleteRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostHomeRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostHomeResponseVO;
@@ -12,6 +14,7 @@ import com.rsupport.bucketlist.core.exception.InvalidTokenException;
 import com.rsupport.bucketlist.core.util.DateUtil;
 import com.rsupport.bucketlist.core.util.JwtUtils;
 import com.rsupport.bucketlist.core.util.ParameterUtil;
+import com.rsupport.bucketlist.core.util.ServicePropertiesUtil;
 import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostSigninResponseVO;
 import com.rsupport.bucketlist.auth.vo.HostSignupCheckRequestVO;
@@ -48,6 +51,9 @@ public class HostController {
   @Autowired
   private BucketlistManager bucketlistManager;
 
+  /*@Autowired
+  private ServicePropertiesUtil servicePropertiesUtil;*/
+
   @GetMapping(value = ApiUriConstants.HOST_SIGNUP_CHECK)
   public HostSignupCheckResponseVO signupCheck(HostSignupCheckRequestVO requestVO) {
     ParameterUtil.checkParameter(requestVO.getUserId());
@@ -82,15 +88,11 @@ public class HostController {
     User user = userManager.getUserById(requestVO.getUserId());
     boolean isValidToken = jwtUtils.isValidAccessToken(requestVO.getToken(), user.getEmail());
     if (!isValidToken)
-      throw new InvalidTokenException();
+      throw new InvalidTokenException();*/
 
-    List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId(user.getId());*/
     List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId("user01");
-    for(Bucketlist bucketlist : bucketlists){
-      bucketlist.setDDay(DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getDate()));
-    }
-    /*boolean popupYn = bucketlistManager.existsPopupBucketlist(user.getId());*/
-    boolean popupYn = false;
+    boolean popupYn = bucketlistManager.existsPopupBucketlist("user01", 3);
+
     return new HostHomeResponseVO(bucketlists, popupYn);
   }
 
@@ -100,6 +102,19 @@ public class HostController {
     bucketlist.setComplete(true);
     bucketlistManager.saveBucketlist(bucketlist);
     return BaseResponseVO.ok();
+  }
+
+  @GetMapping(value = ApiUriConstants.HOST_D_DAY)
+  public HostDDayResponseVO dDay(HostDDayRequestVO requestVO){
+    /*ParameterUtil.checkParameter(requestVO.getUserId(), requestVO.getToken());
+
+    User user = userManager.getUserById(requestVO.getUserId());
+    boolean isValidToken = jwtUtils.isValidAccessToken(requestVO.getToken(), user.getEmail());
+    if (!isValidToken)
+      throw new InvalidTokenException();*/
+
+    List<Bucketlist> bucketlists = bucketlistManager.getDDayBucketlists(requestVO.getUserId());
+    return new HostDDayResponseVO(bucketlists);
   }
 
   @GetMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)

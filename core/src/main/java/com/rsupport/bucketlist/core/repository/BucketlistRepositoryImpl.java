@@ -27,12 +27,21 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
   }
 
   @Override
-  public boolean existsLessThanThreeDaysBucketlist(String userId) {
+  public boolean existsPopupBucketlist(String userId, int popupPeriod) {
     JPAQuery query = new JPAQuery(entityManager);
     QUser user = QUser.user;
     QBucketlist bucketlist = QBucketlist.bucketlist;
 
-    query.from(user).join(bucketlist).where(user.id.eq(userId).and(bucketlist.dDate.loe(DateUtil.addDays(DateUtil.getDate(), 3))));
+    query.from(user).join(bucketlist).where(user.id.eq(userId).and(bucketlist.dDate.loe(DateUtil.addDays(DateUtil.getDate(), popupPeriod))));
     return query.exists();
+  }
+
+  @Override
+  public List<Bucketlist> getDDayBucketlists(String userId) {
+    JPAQuery query = new JPAQuery(entityManager);
+    QBucketlist bucketlist = QBucketlist.bucketlist;
+
+    query.from(bucketlist).where(bucketlist.dDate.isNotNull());
+    return query.list(bucketlist);
   }
 }

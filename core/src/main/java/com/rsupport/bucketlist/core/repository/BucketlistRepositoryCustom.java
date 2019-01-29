@@ -8,5 +8,7 @@ public interface BucketlistRepositoryCustom {
 
   List<Bucketlist> getBucketlistsByUserId(String userId);
 
-  boolean existsLessThanThreeDaysBucketlist(String userId);
+  boolean existsPopupBucketlist(String userId, int popupPeriod);
+
+  List<Bucketlist> getDDayBucketlists(String userId);
 }
