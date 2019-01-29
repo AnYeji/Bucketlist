@@ -46,10 +46,6 @@ public class User {
 
   private boolean enabled;
 
-<<<<<<< HEAD
   @OneToMany
-=======
-  @OneToMany(mappedBy = "category")
->>>>>>> develop
   private List<Category> categories;
 }
