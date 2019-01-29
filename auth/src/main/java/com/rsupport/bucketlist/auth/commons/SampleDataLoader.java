@@ -47,13 +47,6 @@ public class SampleDataLoader implements ApplicationRunner {
     bucketlist.setCreatedDate(new Date());
     bucketlist.setUpdatedDate(new Date());
     bucketlist.setCategory(category);
-<<<<<<< HEAD
-=======
-
-    User user = new User();
-    user.setId("user01");
-    user.setNickName("아여니");
->>>>>>> develop
     bucketlist.setUser(user);
     bucketlistRepository.save(bucketlist);
   }
