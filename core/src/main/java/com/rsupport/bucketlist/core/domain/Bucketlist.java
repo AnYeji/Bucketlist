@@ -1,5 +1,6 @@
 package com.rsupport.bucketlist.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -27,58 +28,61 @@ public class Bucketlist {
   @Id
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
   @GeneratedValue(generator = "system-uuid")
-  @JsonProperty
   private String id;
 
   @Lob
   @Column(nullable = false)
-  @JsonProperty
   private String title;
 
   @ColumnDefault("0")
-  @JsonProperty
   private boolean open;
 
-  @JsonProperty
   private boolean complete;
+
+  @Column(name = "d_date")
+  @JsonIgnore
+  private Date dDate;
+
+  @Transient
+  @JsonProperty("d_day")
+  private int dDay;
+
+  @Column(name = "user_count")
+  @JsonProperty("user_count")
+  private int userCount;
+
+  @Column(name = "goal_count")
+  @JsonProperty("goal_count")
+  private int goalCount;
+
+  @Lob
+  private String memo;
+
+  @Column(name = "img_url_1")
+  @JsonProperty("img_url_1")
+  private String imgUrl1;
+
+  @Column(name = "img_url_2")
+  @JsonProperty("img_url_2")
+  private String imgUrl2;
+
+  @Column(name = "img_url_3")
+  @JsonProperty("img_url_3")
+  private String imgUrl3;
+
+  @Column(name = "created_dt")
+  @JsonIgnore
+  private Date createdDate;
+
+  @Column(name = "updated_dt")
+  @JsonIgnore
+  private Date updatedDate;
 
   @OneToOne
   private Category category;
 
-  @Column(name = "d_day")
-  private Date dDate;
-
-  @Column(name = "count")
-  @JsonProperty
-  private int count;
-
-  @Lob
-  @JsonProperty
-  private String memo;
-
-  @Column(name = "img_url_1")
-  @JsonProperty
-  private String imgUrl1;
-
-  @Column(name = "img_url_2")
-  @JsonProperty
-  private String imgUrl2;
-
-  @Column(name = "img_url_3")
-  @JsonProperty
-  private String imgUrl3;
-
-  @Column(name = "created_dt")
-  private Date createdDate;
-
-  @Column(name = "updated_dt")
-  private Date updatedDate;
-
   @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id")
+  @JsonIgnore
   private User user;
-
-  @Transient
-  @JsonProperty
-  private int dDay;
 }

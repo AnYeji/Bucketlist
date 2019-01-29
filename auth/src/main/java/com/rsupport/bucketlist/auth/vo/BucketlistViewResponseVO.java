@@ -25,8 +25,11 @@ public class BucketlistViewResponseVO extends BaseResponseVO {
   @JsonProperty("d_day")
   private int dDay;
 
-  @JsonProperty("count")
-  private int count;
+  @JsonProperty("user_count")
+  private int userCount;
+
+  @JsonProperty("goal_count")
+  private int goalCount;
 
   @JsonProperty("memo")
   private String memo;
@@ -45,7 +48,9 @@ public class BucketlistViewResponseVO extends BaseResponseVO {
     this.title = bucketlist.getTitle();
     this.open = bucketlist.isOpen();
     this.category = bucketlist.getCategory().getName();
-    this.count = bucketlist.getCount();
+    this.dDay = 2;
+    this.userCount = bucketlist.getUserCount();
+    this.goalCount = bucketlist.getGoalCount();
     this.memo = bucketlist.getMemo();
     this.imgUrl1 = bucketlist.getImgUrl1();
     this.imgUrl2 = bucketlist.getImgUrl2();

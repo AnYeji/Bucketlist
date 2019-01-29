@@ -1,6 +1,8 @@
 package com.rsupport.bucketlist.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.envers.NotAudited;
@@ -28,25 +30,33 @@ public class User {
   private String email;
 
   @Column(name = "account_type")
+  @JsonProperty("account_type")
   private int accountType;
 
   @Column(name = "nick_name")
+  @JsonProperty("nick_name")
   private String nickName;
 
-  @Column(name = "image_url")
-  private String imageUrl;
+  @Column(name = "img_url")
+  @JsonProperty("img_url")
+  private String imgUrl;
 
   @Column(name = "created_dt")
+  @JsonIgnore
   private Date createdDate;
 
   @Column(name = "update_dt")
+  @JsonIgnore
   private Date updatedDate;
 
   @Column(name = "logined_dt")
+  @JsonIgnore
   private Date loginedDate;
 
+  @JsonIgnore
   private boolean enabled;
 
   @OneToMany
+  @JsonIgnore
   private List<Category> categories;
 }

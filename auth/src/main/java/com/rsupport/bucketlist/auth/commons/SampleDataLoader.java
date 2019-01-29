@@ -33,23 +33,37 @@ public class SampleDataLoader implements ApplicationRunner {
   private void createSampleData() {
     User user = new User();
     user.setId("user01");
-    user.setNickName("아여니");
+    user.setNickName("user01");
     userRepository.save(user);
 
-    Category category = new Category();
-    category.setName("운동");
-    category.setUser(user);
-    categoryRepository.save(category);
+    Category category1 = new Category();
+    category1.setName("운동");
+    category1.setUser(user);
+    categoryRepository.save(category1);
 
-    Bucketlist bucketlist = new Bucketlist();
-    bucketlist.setTitle("올림픽공원에서 스케이트 타기");
-    bucketlist.setCount(10);
-    bucketlist.setDDate(new Date());
-    bucketlist.setComplete(true);
-    bucketlist.setCreatedDate(new Date());
-    bucketlist.setUpdatedDate(new Date());
-    bucketlist.setCategory(category);
-    bucketlist.setUser(user);
-    bucketlistRepository.save(bucketlist);
+    Category category2 = new Category();
+    category2.setName("먹방");
+    category2.setUser(user);
+    categoryRepository.save(category2);
+
+    Bucketlist bucketlist1 = new Bucketlist();
+    bucketlist1.setTitle("올림픽공원에서 스케이트 타기");
+    bucketlist1.setUserCount(3);
+    bucketlist1.setGoalCount(10);
+    bucketlist1.setDDate(new Date());
+    bucketlist1.setComplete(false);
+    bucketlist1.setCategory(category1);
+    bucketlist1.setUser(user);
+    bucketlistRepository.save(bucketlist1);
+
+    Bucketlist bucketlist2 = new Bucketlist();
+    bucketlist2.setTitle("신전떡볶이 매운맛 먹기");
+    bucketlist2.setUserCount(5);
+    bucketlist2.setGoalCount(5);
+    bucketlist2.setDDate(new Date());
+    bucketlist2.setComplete(true);
+    bucketlist2.setCategory(category2);
+    bucketlist2.setUser(user);
+    bucketlistRepository.save(bucketlist2);
   }
 }
