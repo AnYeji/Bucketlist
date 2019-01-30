@@ -6,6 +6,7 @@ import com.rsupport.bucketlist.core.domain.User;
 import com.rsupport.bucketlist.core.repository.BucketlistRepository;
 import com.rsupport.bucketlist.core.repository.CategoryRepository;
 import com.rsupport.bucketlist.core.repository.UserRepository;
+import com.rsupport.bucketlist.core.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -50,7 +51,7 @@ public class SampleDataLoader implements ApplicationRunner {
     bucketlist1.setTitle("올림픽공원에서 스케이트 타기");
     bucketlist1.setUserCount(3);
     bucketlist1.setGoalCount(10);
-    bucketlist1.setDDate(new Date());
+    bucketlist1.setDDate(DateUtil.addDays(DateUtil.getDate(), 3));
     bucketlist1.setComplete(false);
     bucketlist1.setCategory(category1);
     bucketlist1.setUser(user);
@@ -60,7 +61,6 @@ public class SampleDataLoader implements ApplicationRunner {
     bucketlist2.setTitle("신전떡볶이 매운맛 먹기");
     bucketlist2.setUserCount(5);
     bucketlist2.setGoalCount(5);
-    bucketlist2.setDDate(new Date());
     bucketlist2.setComplete(true);
     bucketlist2.setCategory(category2);
     bucketlist2.setUser(user);
