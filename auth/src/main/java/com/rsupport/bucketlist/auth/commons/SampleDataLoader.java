@@ -48,9 +48,8 @@ public class SampleDataLoader implements ApplicationRunner {
     categoryRepository.save(category2);
 
     Bucketlist bucketlist1 = new Bucketlist();
+    bucketlist1.setId("bucketlist01");
     bucketlist1.setTitle("올림픽공원에서 스케이트 타기");
-    bucketlist1.setUserCount(3);
-    bucketlist1.setGoalCount(10);
     bucketlist1.setDDate(DateUtil.addDays(DateUtil.getDate(), 3));
     bucketlist1.setComplete(false);
     bucketlist1.setCategory(category1);
@@ -58,10 +57,11 @@ public class SampleDataLoader implements ApplicationRunner {
     bucketlistRepository.save(bucketlist1);
 
     Bucketlist bucketlist2 = new Bucketlist();
+    bucketlist2.setId("bucketlist02");
     bucketlist2.setTitle("신전떡볶이 매운맛 먹기");
-    bucketlist2.setUserCount(5);
+    bucketlist2.setUserCount(2);
     bucketlist2.setGoalCount(5);
-    bucketlist2.setComplete(true);
+    bucketlist2.setComplete(false);
     bucketlist2.setCategory(category2);
     bucketlist2.setUser(user);
     bucketlistRepository.save(bucketlist2);

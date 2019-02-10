@@ -5,16 +5,13 @@ import com.rsupport.bucketlist.auth.vo.BucketlistViewRequestVO;
 import com.rsupport.bucketlist.auth.vo.BucketlistViewResponseVO;
 import com.rsupport.bucketlist.auth.vo.HostDDayRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostDDayResponseVO;
-import com.rsupport.bucketlist.auth.vo.HostHomeCompleteRequestVO;
+import com.rsupport.bucketlist.auth.vo.HostCompleteBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostHomeRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostHomeResponseVO;
 import com.rsupport.bucketlist.auth.vo.MyPageRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageResponseVO;
-import com.rsupport.bucketlist.core.exception.InvalidTokenException;
-import com.rsupport.bucketlist.core.util.DateUtil;
 import com.rsupport.bucketlist.core.util.JwtUtils;
 import com.rsupport.bucketlist.core.util.ParameterUtil;
-import com.rsupport.bucketlist.core.util.ServicePropertiesUtil;
 import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostSigninResponseVO;
 import com.rsupport.bucketlist.auth.vo.HostSignupCheckRequestVO;
@@ -35,7 +32,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -96,14 +92,6 @@ public class HostController {
     return new HostHomeResponseVO(bucketlists, popupYn);
   }
 
-  @PostMapping(value = ApiUriConstants.HOST_HOME_COMPLETE)
-  public BaseResponseVO complete(@RequestBody HostHomeCompleteRequestVO requestVO){
-    Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
-    bucketlist.setComplete(true);
-    bucketlistManager.saveBucketlist(bucketlist);
-    return BaseResponseVO.ok();
-  }
-
   @GetMapping(value = ApiUriConstants.HOST_D_DAY)
   public HostDDayResponseVO dDay(HostDDayRequestVO requestVO){
     /*ParameterUtil.checkParameter(requestVO.getUserId(), requestVO.getToken());
@@ -113,8 +101,26 @@ public class HostController {
     if (!isValidToken)
       throw new InvalidTokenException();*/
 
-    List<Bucketlist> bucketlists = bucketlistManager.getDDayBucketlists(requestVO.getUserId());
+    List<Bucketlist> bucketlists = bucketlistManager.getDDayBucketlists("user01");
     return new HostDDayResponseVO(bucketlists);
+  }
+
+  @PostMapping(value = ApiUriConstants.HOST_COMPLETE_BUCKETLIST)
+  public BaseResponseVO completeBucketlist(@RequestBody HostCompleteBucketlistRequestVO requestVO){
+    log.info(requestVO.getBucketlistId()+"aaaaaaaaaaaaaaaa");
+    Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
+    if(bucketlist.getUserCount() != null) {
+      bucketlist.setUserCount(bucketlist.getUserCount() + 1);
+
+      if(bucketlist.getUserCount() == bucketlist.getGoalCount()) {
+          bucketlist.setComplete(true);
+      }
+    } else {
+      bucketlist.setComplete(true);
+    }
+
+    bucketlistManager.saveBucketlist(bucketlist);
+    return BaseResponseVO.ok();
   }
 
   @GetMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)

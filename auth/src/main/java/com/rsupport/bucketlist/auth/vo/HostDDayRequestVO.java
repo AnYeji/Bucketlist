@@ -11,6 +11,6 @@ public class HostDDayRequestVO {
   @JsonProperty("user_id")
   private String userId;
 
-  @JsonProperty("token")
-  private String token;
+  /*@JsonProperty("token")
+  private String token;*/
 }

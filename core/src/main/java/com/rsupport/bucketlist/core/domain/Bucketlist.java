@@ -26,8 +26,8 @@ import java.util.Date;
 public class Bucketlist {
 
   @Id
-  @GenericGenerator(name = "system-uuid", strategy = "uuid")
-  @GeneratedValue(generator = "system-uuid")
+  /*@GenericGenerator(name = "system-uuid", strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")*/
   private String id;
 
   @Lob
@@ -45,15 +45,15 @@ public class Bucketlist {
 
   @Transient
   @JsonProperty("d_day")
-  private int dDay;
+  private Integer dDay;
 
   @Column(name = "user_count")
   @JsonProperty("user_count")
-  private int userCount;
+  private Integer userCount;
 
   @Column(name = "goal_count")
   @JsonProperty("goal_count")
-  private int goalCount;
+  private Integer goalCount;
 
   @Lob
   private String memo;

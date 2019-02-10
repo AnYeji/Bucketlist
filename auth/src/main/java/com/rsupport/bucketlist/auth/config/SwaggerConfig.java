@@ -29,8 +29,8 @@ public class SwaggerConfig {
   private ApiInfo apiInfo(){
     return new ApiInfoBuilder()
             .title("MYBULI")
-            .description("my bucketlist")
-            .contact(new Contact("안예지", "", "yjan@rsupport.com"))
+            .description("My Bucketlist")
+            .contact(new Contact("AnYeji", "", "yjan@rsupport.com"))
             .build();
   }
 }
