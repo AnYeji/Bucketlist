@@ -22,7 +22,7 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
     JPAQuery query = new JPAQuery(entityManager);
     QBucketlist bucketlist = QBucketlist.bucketlist;
 
-    query.from(bucketlist).where(bucketlist.user().id.eq(userId));
+    query.from(bucketlist).where(bucketlist.user().id.eq(userId)).orderBy(bucketlist.pin.desc());
     return query.list(bucketlist);
   }
 
@@ -41,7 +41,7 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
     JPAQuery query = new JPAQuery(entityManager);
     QBucketlist bucketlist = QBucketlist.bucketlist;
 
-    query.from(bucketlist).where(bucketlist.dDate.isNotNull());
+    query.from(bucketlist).where(bucketlist.dDate.isNotNull()).orderBy(bucketlist.dDate.asc());
     return query.list(bucketlist);
   }
 }

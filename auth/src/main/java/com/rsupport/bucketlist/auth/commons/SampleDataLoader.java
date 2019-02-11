@@ -59,6 +59,7 @@ public class SampleDataLoader implements ApplicationRunner {
     Bucketlist bucketlist2 = new Bucketlist();
     bucketlist2.setId("bucketlist02");
     bucketlist2.setTitle("신전떡볶이 매운맛 먹기");
+    bucketlist2.setPin(true);
     bucketlist2.setUserCount(2);
     bucketlist2.setGoalCount(5);
     bucketlist2.setComplete(false);

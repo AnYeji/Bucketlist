@@ -107,7 +107,6 @@ public class HostController {
 
   @PostMapping(value = ApiUriConstants.HOST_COMPLETE_BUCKETLIST)
   public BaseResponseVO completeBucketlist(@RequestBody HostCompleteBucketlistRequestVO requestVO){
-    log.info(requestVO.getBucketlistId()+"aaaaaaaaaaaaaaaa");
     Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
     if(bucketlist.getUserCount() != null) {
       bucketlist.setUserCount(bucketlist.getUserCount() + 1);

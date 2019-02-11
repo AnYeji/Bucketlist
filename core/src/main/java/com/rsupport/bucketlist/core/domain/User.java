@@ -1,6 +1,8 @@
 package com.rsupport.bucketlist.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -20,6 +22,8 @@ import java.util.List;
 @Entity
 @Table(name = "mt_user")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(value = {"createdDate", "updatedDate", "lastLoginDate", "enabled", "categories"})
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 public class User {
 
   @Id
@@ -42,21 +46,16 @@ public class User {
   private String imgUrl;
 
   @Column(name = "created_dt")
-  @JsonIgnore
   private Date createdDate;
 
   @Column(name = "update_dt")
-  @JsonIgnore
   private Date updatedDate;
 
-  @Column(name = "logined_dt")
-  @JsonIgnore
-  private Date loginedDate;
+  @Column(name = "last_login_dt")
+  private Date lastLoginDate;
 
-  @JsonIgnore
   private boolean enabled;
 
   @OneToMany
-  @JsonIgnore
   private List<Category> categories;
 }

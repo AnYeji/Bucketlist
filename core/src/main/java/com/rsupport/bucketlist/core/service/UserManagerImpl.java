@@ -33,7 +33,7 @@ public class UserManagerImpl implements UserManager {
   @Transactional
   public User signin(HostSigninRequestVO requestVO) {
     User user = userRepository.getOne(requestVO.getUserId());
-    user.setLoginedDate(DateUtil.getDate());
+    user.setLastLoginDate(DateUtil.getDate());
     return userRepository.save(user);
   }
 }

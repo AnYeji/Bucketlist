@@ -1,6 +1,8 @@
 package com.rsupport.bucketlist.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -23,6 +25,8 @@ import java.util.Date;
 @Entity
 @Table(name = "mt_bucketlist")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(value = {"dDate", "createdDate", "updatedDate", "user"})
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Bucketlist {
 
   @Id
@@ -37,10 +41,13 @@ public class Bucketlist {
   @ColumnDefault("0")
   private boolean open;
 
+  @ColumnDefault("0")
+  private boolean pin;
+
+  @ColumnDefault("0")
   private boolean complete;
 
   @Column(name = "d_date")
-  @JsonIgnore
   private Date dDate;
 
   @Transient
@@ -71,11 +78,9 @@ public class Bucketlist {
   private String imgUrl3;
 
   @Column(name = "created_dt")
-  @JsonIgnore
   private Date createdDate;
 
   @Column(name = "updated_dt")
-  @JsonIgnore
   private Date updatedDate;
 
   @OneToOne
@@ -83,6 +88,5 @@ public class Bucketlist {
 
   @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id")
-  @JsonIgnore
   private User user;
 }

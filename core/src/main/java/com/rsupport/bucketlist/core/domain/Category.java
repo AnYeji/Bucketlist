@@ -1,6 +1,8 @@
 package com.rsupport.bucketlist.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -17,6 +19,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "mt_category")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(value = {"user"})
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Category {
 
   @Id
@@ -28,6 +32,5 @@ public class Category {
 
   @ManyToOne
   @JoinColumn(name = "user_id", referencedColumnName = "id")
-  @JsonIgnore
   private User user;
 }
