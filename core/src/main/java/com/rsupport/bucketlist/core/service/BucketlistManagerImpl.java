@@ -18,7 +18,8 @@ public class BucketlistManagerImpl implements BucketlistManager {
   public List<Bucketlist> getBucketlistsByUserId(String userId) {
     List<Bucketlist> bucketlists = bucketlistRepository.getBucketlistsByUserId(userId);
     for(Bucketlist bucketlist : bucketlists){
-      bucketlist.setDDay(DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getDate()));
+      if(bucketlist.getDDate() != null)
+        bucketlist.setDDay(DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getDate()));
     }
 
     return bucketlists;
