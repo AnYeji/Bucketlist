@@ -8,6 +8,7 @@ import com.rsupport.bucketlist.auth.vo.HostDDayResponseVO;
 import com.rsupport.bucketlist.auth.vo.HostCompleteBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostHomeRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostHomeResponseVO;
+import com.rsupport.bucketlist.auth.vo.HostPinBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageResponseVO;
 import com.rsupport.bucketlist.core.util.JwtUtils;
@@ -80,7 +81,7 @@ public class HostController {
   @GetMapping(value = ApiUriConstants.HOST_HOME)
   public HostHomeResponseVO home(HostHomeRequestVO requestVO) {
     /*ParameterUtil.checkParameter(requestVO.getUserId(), requestVO.getToken());
-
+    
     User user = userManager.getUserById(requestVO.getUserId());
     boolean isValidToken = jwtUtils.isValidAccessToken(requestVO.getToken(), user.getEmail());
     if (!isValidToken)
@@ -93,9 +94,9 @@ public class HostController {
   }
 
   @GetMapping(value = ApiUriConstants.HOST_D_DAY)
-  public HostDDayResponseVO dDay(HostDDayRequestVO requestVO){
+  public HostDDayResponseVO dDay(HostDDayRequestVO requestVO) {
     /*ParameterUtil.checkParameter(requestVO.getUserId(), requestVO.getToken());
-
+    
     User user = userManager.getUserById(requestVO.getUserId());
     boolean isValidToken = jwtUtils.isValidAccessToken(requestVO.getToken(), user.getEmail());
     if (!isValidToken)
@@ -106,16 +107,29 @@ public class HostController {
   }
 
   @PostMapping(value = ApiUriConstants.HOST_COMPLETE_BUCKETLIST)
-  public BaseResponseVO completeBucketlist(@RequestBody HostCompleteBucketlistRequestVO requestVO){
+  public BaseResponseVO completeBucketlist(@RequestBody HostCompleteBucketlistRequestVO requestVO) {
     Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
-    if(bucketlist.getUserCount() != null) {
+    if (bucketlist.getUserCount() != null) {
       bucketlist.setUserCount(bucketlist.getUserCount() + 1);
 
-      if(bucketlist.getUserCount() == bucketlist.getGoalCount()) {
-          bucketlist.setComplete(true);
+      if (bucketlist.getUserCount() == bucketlist.getGoalCount()) {
+        bucketlist.setComplete(true);
       }
     } else {
       bucketlist.setComplete(true);
+    }
+
+    bucketlistManager.saveBucketlist(bucketlist);
+    return BaseResponseVO.ok();
+  }
+
+  @PostMapping(value = ApiUriConstants.HOST_PIN_BUCKETLIST)
+  public BaseResponseVO pinBucketlist(@RequestBody HostPinBucketlistRequestVO requestVO) {
+    Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
+    if (bucketlist.isPin()) {
+      bucketlist.setPin(false);
+    } else {
+      bucketlist.setPin(true);
     }
 
     bucketlistManager.saveBucketlist(bucketlist);

@@ -11,6 +11,7 @@ public class ApiUriConstants {
   public static final String HOST_HOME = HOST + "/home";
   public static final String HOST_D_DAY = HOST + "/dDay";
   public static final String HOST_COMPLETE_BUCKETLIST = HOST + "/complete";
+  public static final String HOST_PIN_BUCKETLIST = HOST + "/pin";
 
   public static final String HOST_BUCKETLIST_CRUD = HOST + "/{bucketlistId}";
 

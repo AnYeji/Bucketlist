@@ -103,3 +103,18 @@ include::{snippets}/host-controller-test/test-complete-bucketlist/http-request.a
 === response
 
 include::{snippets}/host-controller-test/test-complete-bucketlist/http-response.adoc[]
+
+
+== 버킷리스트 화면 상단 고정 / 고정해제 [post]
+
+해당 버킷리스트를 화면 상단에 고정 / 고정해제
+
+include::{snippets}/host-controller-test/test-pin-bucketlist/curl-request.adoc[]
+
+=== request
+
+include::{snippets}/host-controller-test/test-pin-bucketlist/http-request.adoc[]
+
+=== response
+
+include::{snippets}/host-controller-test/test-pin-bucketlist/http-response.adoc[]

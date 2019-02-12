@@ -3,6 +3,7 @@ package com.rsupport.bucketlist.auth;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rsupport.bucketlist.auth.constants.ApiUriConstants;
 import com.rsupport.bucketlist.auth.vo.HostCompleteBucketlistRequestVO;
+import com.rsupport.bucketlist.auth.vo.HostPinBucketlistRequestVO;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,6 +65,14 @@ public class HostControllerTest {
         HostCompleteBucketlistRequestVO requestVO = new HostCompleteBucketlistRequestVO();
         requestVO.setBucketlistId("bucketlist01");
         this.mockMvc.perform(post(ApiUriConstants.HOST_COMPLETE_BUCKETLIST).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(requestVO))).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testPinBucketlist() throws Exception {
+        HostPinBucketlistRequestVO requestVO = new HostPinBucketlistRequestVO();
+        requestVO.setBucketlistId("bucketlist01");
+        this.mockMvc.perform(post(ApiUriConstants.HOST_PIN_BUCKETLIST).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestVO))).andExpect(status().isOk());
     }
 
