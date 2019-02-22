@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServicePropertiesUtil {
 
-    /*@Value("${popup.period}")*/
-    private Integer popupPeriod;
+  /*@Value("${popup.period}")*/
+  private String popupPeriod;
 }

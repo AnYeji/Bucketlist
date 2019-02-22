@@ -26,8 +26,12 @@ public class BucketlistManagerImpl implements BucketlistManager {
   }
 
   @Override
-  public boolean existsPopupBucketlist(String userId, int popupPeriod) {
-    return bucketlistRepository.existsPopupBucketlist(userId, popupPeriod);
+  public boolean existsPopupBucketlist(String userId, List<Integer> popupPeriodList) {
+    boolean exists = false;
+    for(int popupPeriod : popupPeriodList) {
+      exists = exists | bucketlistRepository.existsPopupBucketlist(userId, popupPeriod);
+    }
+    return exists;
   }
 
   @Override

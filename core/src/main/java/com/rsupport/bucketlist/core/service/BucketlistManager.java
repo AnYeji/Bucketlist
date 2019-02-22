@@ -8,7 +8,7 @@ public interface BucketlistManager {
 
   List<Bucketlist> getBucketlistsByUserId(String userId);
 
-  boolean existsPopupBucketlist(String userId, int popupPeriod);
+  boolean existsPopupBucketlist(String userId, List<Integer> popupPeriodList);
 
   List<Bucketlist> getDDayBucketlists(String userId);
 

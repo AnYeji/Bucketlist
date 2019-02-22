@@ -13,6 +13,7 @@ import com.rsupport.bucketlist.auth.vo.MyPageRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageResponseVO;
 import com.rsupport.bucketlist.core.util.JwtUtils;
 import com.rsupport.bucketlist.core.util.ParameterUtil;
+import com.rsupport.bucketlist.core.util.ServicePropertiesUtil;
 import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostSigninResponseVO;
 import com.rsupport.bucketlist.auth.vo.HostSignupCheckRequestVO;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -88,7 +90,13 @@ public class HostController {
       throw new InvalidTokenException();*/
 
     List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByUserId("user01");
-    boolean popupYn = bucketlistManager.existsPopupBucketlist("user01", 3);
+
+    String popupPeriodStr = "1,2,3,7,30";
+    List<Integer> popupPeriodList = new ArrayList<>();
+    for(String popupPeriod : popupPeriodStr.split(",")){
+      popupPeriodList.add(Integer.parseInt(popupPeriod));
+    }
+    boolean popupYn = bucketlistManager.existsPopupBucketlist("user01", popupPeriodList);
 
     return new HostHomeResponseVO(bucketlists, popupYn);
   }
@@ -109,15 +117,10 @@ public class HostController {
   @PostMapping(value = ApiUriConstants.HOST_COMPLETE_BUCKETLIST)
   public BaseResponseVO completeBucketlist(@RequestBody HostCompleteBucketlistRequestVO requestVO) {
     Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
-    if (bucketlist.getUserCount() != null) {
-      bucketlist.setUserCount(bucketlist.getUserCount() + 1);
+    bucketlist.setUserCount(bucketlist.getUserCount() + 1);
 
-      if (bucketlist.getUserCount() == bucketlist.getGoalCount()) {
-        bucketlist.setComplete(true);
-      }
-    } else {
+    if (bucketlist.getUserCount() == bucketlist.getGoalCount())
       bucketlist.setComplete(true);
-    }
 
     bucketlistManager.saveBucketlist(bucketlist);
     return BaseResponseVO.ok();

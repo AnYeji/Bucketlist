@@ -34,15 +34,12 @@ public class User {
   private String email;
 
   @Column(name = "account_type")
-  @JsonProperty("account_type")
   private int accountType;
 
   @Column(name = "nick_name")
-  @JsonProperty("nick_name")
   private String nickName;
 
   @Column(name = "img_url")
-  @JsonProperty("img_url")
   private String imgUrl;
 
   @Column(name = "created_dt")
@@ -56,6 +53,4 @@ public class User {
 
   private boolean enabled;
 
-  @OneToMany
-  private List<Category> categories;
 }

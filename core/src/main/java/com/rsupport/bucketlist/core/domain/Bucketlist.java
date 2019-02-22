@@ -51,30 +51,26 @@ public class Bucketlist {
   private Date dDate;
 
   @Transient
-  @JsonProperty("d_day")
   private Integer dDay;
 
   @Column(name = "user_count")
-  @JsonProperty("user_count")
-  private Integer userCount;
+  @ColumnDefault("0")
+  private int userCount;
 
   @Column(name = "goal_count")
-  @JsonProperty("goal_count")
-  private Integer goalCount;
+  @ColumnDefault("1")
+  private int goalCount;
 
   @Lob
   private String memo;
 
   @Column(name = "img_url_1")
-  @JsonProperty("img_url_1")
   private String imgUrl1;
 
   @Column(name = "img_url_2")
-  @JsonProperty("img_url_2")
   private String imgUrl2;
 
   @Column(name = "img_url_3")
-  @JsonProperty("img_url_3")
   private String imgUrl3;
 
   @Column(name = "created_dt")

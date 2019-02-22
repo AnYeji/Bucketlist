@@ -32,7 +32,7 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
     QUser user = QUser.user;
     QBucketlist bucketlist = QBucketlist.bucketlist;
 
-    query.from(bucketlist).where(bucketlist.user().id.eq(userId).and(bucketlist.dDate.before(DateUtil.addDays(DateUtil.getDate(), popupPeriod))));
+    query.from(bucketlist).where(bucketlist.user().id.eq(userId).and(bucketlist.dDate.eq(DateUtil.addDays(DateUtil.getDate(), popupPeriod))));
     return query.exists();
   }
 

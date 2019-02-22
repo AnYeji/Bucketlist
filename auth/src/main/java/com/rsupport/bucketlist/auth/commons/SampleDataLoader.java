@@ -51,6 +51,7 @@ public class SampleDataLoader implements ApplicationRunner {
     bucketlist1.setId("bucketlist01");
     bucketlist1.setTitle("올림픽공원에서 스케이트 타기");
     bucketlist1.setDDate(DateUtil.addDays(DateUtil.getDate(), 3));
+    bucketlist1.setGoalCount(1);
     bucketlist1.setComplete(false);
     bucketlist1.setCategory(category1);
     bucketlist1.setUser(user);
