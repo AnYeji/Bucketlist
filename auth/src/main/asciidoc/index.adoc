@@ -118,3 +118,32 @@ include::{snippets}/host-controller-test/test-pin-bucketlist/http-request.adoc[]
 === response
 
 include::{snippets}/host-controller-test/test-pin-bucketlist/http-response.adoc[]
+
+
+== 버킷리스트 글 작성 전 [get]
+
+글 작성 화면에 필요한 데이터 요청
+
+include::{snippets}/host-controller-test/test-before-write/curl-request.adoc[]
+
+=== request
+
+include::{snippets}/host-controller-test/test-before-write/http-request.adoc[]
+
+=== response
+
+include::{snippets}/host-controller-test/test-before-write/http-response.adoc[]
+
+== 버킷리스트 글 작성 후 [post]
+
+작성한 버킷리스트를 저장
+
+include::{snippets}/host-controller-test/test-after-write/curl-request.adoc[]
+
+=== request
+
+include::{snippets}/host-controller-test/test-after-write/http-request.adoc[]
+
+=== response
+
+include::{snippets}/host-controller-test/test-after-write/http-response.adoc[]

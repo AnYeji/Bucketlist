@@ -14,6 +14,8 @@ public class ApiUriConstants {
   public static final String HOST_PIN_BUCKETLIST = HOST + "/pin";
 
   public static final String HOST_BUCKETLIST_CRUD = HOST + "/{bucketlistId}";
+  public static final String HOST_BEFORE_WRITE = HOST + "/beforeWrite";
+  public static final String HOST_AFTER_WRITE = HOST + "/afterWrite";
 
   public static final String HOST_MYPAGE = HOST + "/mypage";
 

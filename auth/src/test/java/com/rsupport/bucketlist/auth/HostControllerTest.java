@@ -4,6 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rsupport.bucketlist.auth.constants.ApiUriConstants;
 import com.rsupport.bucketlist.auth.vo.HostCompleteBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostPinBucketlistRequestVO;
+import com.rsupport.bucketlist.core.domain.Bucketlist;
+import com.rsupport.bucketlist.core.domain.Category;
+import com.rsupport.bucketlist.core.domain.User;
+import com.rsupport.bucketlist.core.util.DateUtil;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -111,14 +115,36 @@ public class HostControllerTest {
             /*.andDo(document("host-pinBucketlist"))*/;
   }
 
-  /*@Test
-  public void testGetBucketlist() {
-  
-  }
-  
   @Test
-  public void testSaveBucketlist() {
-  
+  public void testBeforeWrite() throws Exception {
+    this.mockMvc.perform(get(ApiUriConstants.HOST_BEFORE_WRITE)
+            .accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk());
+  }
+
+  /*@Test
+  public void testAfterWrite() throws Exception{
+    Category category = new Category();
+    category.setId("testCategory");
+
+    User user = new User();
+    user.setId("testUser");
+
+    Bucketlist bucketlist = new Bucketlist();
+    bucketlist.setId("testBucketlist");
+    bucketlist.setTitle("퇴사하기");
+    bucketlist.setDDate(DateUtil.addDays(DateUtil.getDate(), 3));
+    bucketlist.setGoalCount(1);
+    bucketlist.setComplete(false);
+    bucketlist.setCategory(category);
+    bucketlist.setUser(user);
+
+    this.mockMvc.perform(post(ApiUriConstants.HOST_AFTER_WRITE)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(bucketlist)))
+            .andExpect(status().isOk());
   }*/
 
 }

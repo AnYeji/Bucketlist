@@ -11,9 +11,10 @@ import com.rsupport.bucketlist.auth.vo.HostHomeResponseVO;
 import com.rsupport.bucketlist.auth.vo.HostPinBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageResponseVO;
+import com.rsupport.bucketlist.core.domain.Category;
+import com.rsupport.bucketlist.core.service.CategoryManager;
 import com.rsupport.bucketlist.core.util.JwtUtils;
 import com.rsupport.bucketlist.core.util.ParameterUtil;
-import com.rsupport.bucketlist.core.util.ServicePropertiesUtil;
 import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostSigninResponseVO;
 import com.rsupport.bucketlist.auth.vo.HostSignupCheckRequestVO;
@@ -49,6 +50,9 @@ public class HostController {
 
   @Autowired
   private BucketlistManager bucketlistManager;
+
+  @Autowired
+  private CategoryManager categoryManager;
 
   /*@Autowired
   private ServicePropertiesUtil servicePropertiesUtil;*/
@@ -147,9 +151,14 @@ public class HostController {
     return new BucketlistViewResponseVO(bucketlist);
   }
 
-  @PostMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
-  public BaseResponseVO saveBucketlist(Bucketlist bucketlist) {
-    ParameterUtil.checkParameter(bucketlist);
+  @GetMapping(value = ApiUriConstants.HOST_BEFORE_WRITE)
+  public List<Category> beforeWrite(){
+    return categoryManager.getCategoriesByUserId();
+  }
+
+  @PostMapping(value = ApiUriConstants.HOST_AFTER_WRITE)
+  public BaseResponseVO afterWrite(Bucketlist bucketlist) {
+    /*ParameterUtil.checkParameter(bucketlist);*/
 
     bucketlistManager.saveBucketlist(bucketlist);
     return BaseResponseVO.ok();
