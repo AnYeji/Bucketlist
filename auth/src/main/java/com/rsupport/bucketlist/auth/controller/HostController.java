@@ -144,10 +144,10 @@ public class HostController {
   }
 
   @GetMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
-  public BucketlistViewResponseVO getBucketlist(BucketlistViewRequestVO requestVO) {
-    ParameterUtil.checkParameter(requestVO.getBucketlistId());
+  public BucketlistViewResponseVO getBucketlist(String bucketlistId) {
+    ParameterUtil.checkParameter(bucketlistId);
 
-    Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
+    Bucketlist bucketlist = bucketlistManager.getBucketlistById(bucketlistId);
     return new BucketlistViewResponseVO(bucketlist);
   }
 

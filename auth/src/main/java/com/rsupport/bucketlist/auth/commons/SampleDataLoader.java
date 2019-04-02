@@ -33,7 +33,6 @@ public class SampleDataLoader implements ApplicationRunner {
 
   private void createSampleData() {
     User user = new User();
-    user.setId("user01");
     user.setNickName("user01");
     userRepository.save(user);
 
@@ -47,8 +46,17 @@ public class SampleDataLoader implements ApplicationRunner {
     category2.setUser(user);
     categoryRepository.save(category2);
 
+    Category category3 = new Category();
+    category3.setName("쇼핑");
+    category3.setUser(user);
+    categoryRepository.save(category3);
+
+    Category category4 = new Category();
+    category4.setName("여행");
+    category4.setUser(user);
+    categoryRepository.save(category4);
+
     Bucketlist bucketlist1 = new Bucketlist();
-    bucketlist1.setId("bucketlist01");
     bucketlist1.setTitle("올림픽공원에서 스케이트 타기");
     bucketlist1.setDDate(DateUtil.addDays(DateUtil.getDate(), 3));
     bucketlist1.setGoalCount(1);
@@ -58,7 +66,6 @@ public class SampleDataLoader implements ApplicationRunner {
     bucketlistRepository.save(bucketlist1);
 
     Bucketlist bucketlist2 = new Bucketlist();
-    bucketlist2.setId("bucketlist02");
     bucketlist2.setTitle("신전떡볶이 매운맛 먹기");
     bucketlist2.setPin(true);
     bucketlist2.setUserCount(2);
@@ -67,5 +74,42 @@ public class SampleDataLoader implements ApplicationRunner {
     bucketlist2.setCategory(category2);
     bucketlist2.setUser(user);
     bucketlistRepository.save(bucketlist2);
+
+    Bucketlist bucketlist3 = new Bucketlist();
+    bucketlist3.setTitle("과자파티하기");
+    bucketlist3.setDDate(DateUtil.addDays(DateUtil.getDate(), 20));
+    bucketlist3.setUserCount(4);
+    bucketlist3.setGoalCount(4);
+    bucketlist3.setComplete(true);
+    bucketlist3.setCategory(category2);
+    bucketlist3.setUser(user);
+    bucketlistRepository.save(bucketlist3);
+
+    Bucketlist bucketlist4 = new Bucketlist();
+    bucketlist4.setTitle("삼바 배우기");
+    bucketlist4.setUserCount(1);
+    bucketlist4.setGoalCount(1);
+    bucketlist4.setComplete(true);
+    bucketlist4.setCategory(category1);
+    bucketlist4.setUser(user);
+    bucketlistRepository.save(bucketlist4);
+
+    Bucketlist bucketlist5 = new Bucketlist();
+    bucketlist5.setTitle("갤럭시 S10으로 바꾸기");
+    bucketlist5.setUserCount(1);
+    bucketlist5.setGoalCount(1);
+    bucketlist5.setComplete(true);
+    bucketlist5.setCategory(category3);
+    bucketlist5.setUser(user);
+    bucketlistRepository.save(bucketlist5);
+
+    Bucketlist bucketlist6 = new Bucketlist();
+    bucketlist6.setTitle("남자친구랑 유럽여행 가기");
+    bucketlist6.setUserCount(1);
+    bucketlist6.setGoalCount(1);
+    bucketlist6.setComplete(true);
+    bucketlist6.setCategory(category4);
+    bucketlist6.setUser(user);
+    bucketlistRepository.save(bucketlist6);
   }
 }

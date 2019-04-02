@@ -27,8 +27,8 @@ import java.util.List;
 public class User {
 
   @Id
-  /*@GenericGenerator(name = "system-uuid", strategy = "uuid")
-  @GeneratedValue(generator = "system-uuid")*/
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")
   private String id;
 
   private String email;

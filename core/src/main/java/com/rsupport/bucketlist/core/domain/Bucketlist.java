@@ -32,8 +32,8 @@ import java.util.List;
 public class Bucketlist {
 
   @Id
-  /*@GenericGenerator(name = "system-uuid", strategy = "uuid")
-  @GeneratedValue(generator = "system-uuid")*/
+  @GenericGenerator(name = "system-uuid", strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")
   private String id;
 
   @Lob

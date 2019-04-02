@@ -4,10 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rsupport.bucketlist.auth.constants.ApiUriConstants;
 import com.rsupport.bucketlist.auth.vo.HostCompleteBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.HostPinBucketlistRequestVO;
-import com.rsupport.bucketlist.core.domain.Bucketlist;
-import com.rsupport.bucketlist.core.domain.Category;
-import com.rsupport.bucketlist.core.domain.User;
-import com.rsupport.bucketlist.core.util.DateUtil;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -57,7 +53,7 @@ public class HostControllerTest {
   public void setup() {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext)
             .apply(documentationConfiguration(this.restDocumentation))
-            .alwaysDo(document("{class-name}/{method-name}",
+            .alwaysDo(document("{method-name}",
                     preprocessRequest(
                             modifyUris()
                                     .scheme("http")
@@ -75,7 +71,7 @@ public class HostControllerTest {
             .accept(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk())
-            /*.andDo(document("host-home",
+            /*.andDo(document("test-home",
                     responseFields(
                             fieldWithPath("popupYn").type(JsonFieldType.NUMBER).description("팝업 여부")
                     )
@@ -95,6 +91,7 @@ public class HostControllerTest {
   public void testCompleteBucketlist() throws Exception {
     HostCompleteBucketlistRequestVO requestVO = new HostCompleteBucketlistRequestVO();
     requestVO.setBucketlistId("bucketlist01");
+
     this.mockMvc.perform(post(ApiUriConstants.HOST_COMPLETE_BUCKETLIST)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
@@ -107,6 +104,7 @@ public class HostControllerTest {
   public void testPinBucketlist() throws Exception {
     HostPinBucketlistRequestVO requestVO = new HostPinBucketlistRequestVO();
     requestVO.setBucketlistId("bucketlist01");
+
     this.mockMvc.perform(post(ApiUriConstants.HOST_PIN_BUCKETLIST)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
@@ -122,6 +120,7 @@ public class HostControllerTest {
             .andDo(print())
             .andExpect(status().isOk());
   }
+
 
   /*@Test
   public void testAfterWrite() throws Exception{
@@ -146,7 +145,6 @@ public class HostControllerTest {
             .content(objectMapper.writeValueAsString(bucketlist)))
             .andExpect(status().isOk());
   }*/
-
 }
 
 /*http://woowabros.github.io/experience/2018/12/28/spring-rest-docs.html*/

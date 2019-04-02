@@ -63,15 +63,15 @@ use of HTTP status codes.
 
 사용자가 등록한 모든 버킷리스트를 화면 상단 고정한 것부터 조회
 
-include::{snippets}/host-controller-test/test-home/curl-request.adoc[]
+include::{snippets}/test-home/curl-request.adoc[]
 
 === request
 
-include::{snippets}/host-controller-test/test-home/http-request.adoc[]
+include::{snippets}/test-home/http-request.adoc[]
 
 === response
 
-include::{snippets}/host-controller-test/test-home/http-response.adoc[]
+include::{snippets}/test-home/http-response.adoc[]
 
 
 
@@ -79,41 +79,41 @@ include::{snippets}/host-controller-test/test-home/http-response.adoc[]
 
 디데이가 등록된 버킷리스트를 날짜가 빠른순으로 조회
 
-include::{snippets}/host-controller-test/test-d-day/curl-request.adoc[]
+include::{snippets}/test-d-day/curl-request.adoc[]
 
 === request
 
-include::{snippets}/host-controller-test/test-d-day/http-request.adoc[]
+include::{snippets}/test-d-day/http-request.adoc[]
 
 === response
 
-include::{snippets}/host-controller-test/test-d-day/http-response.adoc[]
+include::{snippets}/test-d-day/http-response.adoc[]
 
 
 == 버킷리스트 완료 [post]
 
 해당 버킷리스트를 완료 처리
 
-include::{snippets}/host-controller-test/test-complete-bucketlist/curl-request.adoc[]
+include::{snippets}/test-complete-bucketlist/curl-request.adoc[]
 
 === request
 
-include::{snippets}/host-controller-test/test-complete-bucketlist/http-request.adoc[]
+include::{snippets}/test-complete-bucketlist/http-request.adoc[]
 
 === response
 
-include::{snippets}/host-controller-test/test-complete-bucketlist/http-response.adoc[]
+include::{snippets}/test-complete-bucketlist/http-response.adoc[]
 
 
 == 버킷리스트 화면 상단 고정 / 고정해제 [post]
 
 해당 버킷리스트를 화면 상단에 고정 / 고정해제
 
-include::{snippets}/host-controller-test/test-pin-bucketlist/curl-request.adoc[]
+include::{snippets}/test-pin-bucketlist/curl-request.adoc[]
 
 === request
 
-include::{snippets}/host-controller-test/test-pin-bucketlist/http-request.adoc[]
+include::{snippets}/test-pin-bucketlist/http-request.adoc[]
 
 === response
 
