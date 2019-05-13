@@ -17,7 +17,7 @@ public class CategoryManagerImpl implements CategoryManager {
   }
 
   @Override
-  public Category getCategoryByCategoryId(String categoryId) {
-    return categoryRepository.getOne(categoryId);
+  public Category getCategoryByName(String name) {
+    return categoryRepository.getCategoryByName(name);
   }
 }

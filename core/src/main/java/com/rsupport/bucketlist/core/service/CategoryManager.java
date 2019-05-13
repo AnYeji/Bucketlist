@@ -6,5 +6,5 @@ public interface CategoryManager {
 
   String getLastCategoryId();
 
-  Category getCategoryByCategoryId(String cateogyrId);
+  Category getCategoryByName(String name);
 }
