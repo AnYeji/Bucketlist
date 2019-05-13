@@ -61,10 +61,6 @@ use of HTTP status codes.
 
 == 버킷리스트 목록 조회 [get]
 
-사용자가 등록한 모든 버킷리스트를 화면 상단 고정한 것부터 조회
-
-include::{snippets}/test-home/curl-request.adoc[]
-
 === request
 
 include::{snippets}/test-home/http-request.adoc[]
@@ -74,12 +70,7 @@ include::{snippets}/test-home/http-request.adoc[]
 include::{snippets}/test-home/http-response.adoc[]
 
 
-
 == 디데이 버킷리스트 조회 [get]
-
-디데이가 등록된 버킷리스트를 날짜가 빠른순으로 조회
-
-include::{snippets}/test-d-day/curl-request.adoc[]
 
 === request
 
@@ -90,11 +81,9 @@ include::{snippets}/test-d-day/http-request.adoc[]
 include::{snippets}/test-d-day/http-response.adoc[]
 
 
+
+////
 == 버킷리스트 완료 [post]
-
-해당 버킷리스트를 완료 처리
-
-include::{snippets}/test-complete-bucketlist/curl-request.adoc[]
 
 === request
 
@@ -105,11 +94,7 @@ include::{snippets}/test-complete-bucketlist/http-request.adoc[]
 include::{snippets}/test-complete-bucketlist/http-response.adoc[]
 
 
-== 버킷리스트 화면 상단 고정 / 고정해제 [post]
-
-해당 버킷리스트를 화면 상단에 고정 / 고정해제
-
-include::{snippets}/test-pin-bucketlist/curl-request.adoc[]
+== 버킷리스트 상단 고정 / 고정해제 [post]
 
 === request
 
@@ -117,33 +102,27 @@ include::{snippets}/test-pin-bucketlist/http-request.adoc[]
 
 === response
 
-include::{snippets}/host-controller-test/test-pin-bucketlist/http-response.adoc[]
+include::{snippets}/test-pin-bucketlist/http-response.adoc[]
+////
 
 
-== 버킷리스트 글 작성 전 [get]
-
-글 작성 화면에 필요한 데이터 요청
-
-include::{snippets}/host-controller-test/test-before-write/curl-request.adoc[]
+== 버킷리스트 등록 전 [get]
 
 === request
 
-include::{snippets}/host-controller-test/test-before-write/http-request.adoc[]
+include::{snippets}/test-before-write/http-request.adoc[]
 
 === response
 
-include::{snippets}/host-controller-test/test-before-write/http-response.adoc[]
+include::{snippets}/test-before-write/http-response.adoc[]
 
-== 버킷리스트 글 작성 후 [post]
 
-작성한 버킷리스트를 저장
-
-include::{snippets}/host-controller-test/test-after-write/curl-request.adoc[]
+== 버킷리스트 등록 [post]
 
 === request
 
-include::{snippets}/host-controller-test/test-after-write/http-request.adoc[]
+include::{snippets}/test-write/http-request.adoc[]
 
 === response
 
-include::{snippets}/host-controller-test/test-after-write/http-response.adoc[]
+include::{snippets}/test-write/http-response.adoc[]

@@ -11,17 +11,17 @@ import java.util.List;
 
 @Getter
 @Setter
-public class HostDDayResponseVO extends BaseResponseVO {
+public class DDayResponseVO extends BaseResponseVO {
 
-    @JsonProperty
-    private List<Bucketlist> bucketlists;
+  @JsonProperty
+  private List<Bucketlist> bucketlists;
 
-    public HostDDayResponseVO(String returnCode) {
-        super(returnCode);
-    }
+  public DDayResponseVO(String returnCode) {
+    super(returnCode);
+  }
 
-    public HostDDayResponseVO(List<Bucketlist> bucketlists) {
-        super(ApiReturnCodes.OK);
-        this.bucketlists = bucketlists;
-    }
+  public DDayResponseVO(List<Bucketlist> bucketlists) {
+    super(ApiReturnCodes.OK);
+    this.bucketlists = bucketlists;
+  }
 }

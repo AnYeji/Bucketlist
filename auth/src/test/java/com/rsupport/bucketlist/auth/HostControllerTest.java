@@ -2,18 +2,20 @@ package com.rsupport.bucketlist.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rsupport.bucketlist.auth.constants.ApiUriConstants;
-import com.rsupport.bucketlist.auth.vo.HostCompleteBucketlistRequestVO;
-import com.rsupport.bucketlist.auth.vo.HostPinBucketlistRequestVO;
+import com.rsupport.bucketlist.auth.vo.BucketlistWriteRequestVO;
+import com.rsupport.bucketlist.auth.vo.CompleteBucketlistRequestVO;
+import com.rsupport.bucketlist.auth.vo.PinBucketlistRequestVO;
+import com.rsupport.bucketlist.core.service.BucketlistManager;
+import com.rsupport.bucketlist.core.service.CategoryManager;
+import com.rsupport.bucketlist.core.util.DateUtil;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.JUnitRestDocumentation;
-import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -25,7 +27,6 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.mo
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -48,6 +49,12 @@ public class HostControllerTest {
   private ObjectMapper objectMapper;
 
   private MockMvc mockMvc;
+
+  @Autowired
+  private BucketlistManager bucketlistManager;
+
+  @Autowired
+  private CategoryManager categoryManager;
 
   @Before
   public void setup() {
@@ -89,10 +96,11 @@ public class HostControllerTest {
 
   @Test
   public void testCompleteBucketlist() throws Exception {
-    HostCompleteBucketlistRequestVO requestVO = new HostCompleteBucketlistRequestVO();
-    requestVO.setBucketlistId("bucketlist01");
+    CompleteBucketlistRequestVO requestVO = new CompleteBucketlistRequestVO();
+    String bucketlistId = bucketlistManager.getLastBucketlistId();
+    requestVO.setBucketlistId(bucketlistId);
 
-    this.mockMvc.perform(post(ApiUriConstants.HOST_COMPLETE_BUCKETLIST)
+    this.mockMvc.perform(post(ApiUriConstants.HOST_BUCKETLIST_COMPLETE)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(requestVO)))
@@ -102,10 +110,11 @@ public class HostControllerTest {
 
   @Test
   public void testPinBucketlist() throws Exception {
-    HostPinBucketlistRequestVO requestVO = new HostPinBucketlistRequestVO();
-    requestVO.setBucketlistId("bucketlist01");
+    PinBucketlistRequestVO requestVO = new PinBucketlistRequestVO();
+    String bucketlistId = bucketlistManager.getLastBucketlistId();
+    requestVO.setBucketlistId(bucketlistId);
 
-    this.mockMvc.perform(post(ApiUriConstants.HOST_PIN_BUCKETLIST)
+    this.mockMvc.perform(post(ApiUriConstants.HOST_BUCKETLIST_PIN)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(requestVO)))
@@ -115,36 +124,29 @@ public class HostControllerTest {
 
   @Test
   public void testBeforeWrite() throws Exception {
-    this.mockMvc.perform(get(ApiUriConstants.HOST_BEFORE_WRITE)
+    this.mockMvc.perform(get(ApiUriConstants.HOST_BUCKETLIST_BEFORE_WRITE)
             .accept(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk());
   }
 
+  @Test
+  public void testWrite() throws Exception {
+    String categoryId = categoryManager.getLastCategoryId();
 
-  /*@Test
-  public void testAfterWrite() throws Exception{
-    Category category = new Category();
-    category.setId("testCategory");
+    BucketlistWriteRequestVO requestVO = new BucketlistWriteRequestVO();
+    requestVO.setTitle("eat pray love");
+    requestVO.setOpen(true);
+    requestVO.setGoalCount(10);
+    requestVO.setDDate(DateUtil.addDays(DateUtil.getDate(), 3));
+    requestVO.setMemo("memo");
+    requestVO.setCategoryId(categoryId);
+    requestVO.setUserId("user01");
 
-    User user = new User();
-    user.setId("testUser");
-
-    Bucketlist bucketlist = new Bucketlist();
-    bucketlist.setId("testBucketlist");
-    bucketlist.setTitle("퇴사하기");
-    bucketlist.setDDate(DateUtil.addDays(DateUtil.getDate(), 3));
-    bucketlist.setGoalCount(1);
-    bucketlist.setComplete(false);
-    bucketlist.setCategory(category);
-    bucketlist.setUser(user);
-
-    this.mockMvc.perform(post(ApiUriConstants.HOST_AFTER_WRITE)
+    this.mockMvc.perform(post(ApiUriConstants.HOST_BUCKETLIST_WRITE)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(bucketlist)))
+            .content(objectMapper.writeValueAsString(requestVO)))
             .andExpect(status().isOk());
-  }*/
+  }
 }
-
-/*http://woowabros.github.io/experience/2018/12/28/spring-rest-docs.html*/

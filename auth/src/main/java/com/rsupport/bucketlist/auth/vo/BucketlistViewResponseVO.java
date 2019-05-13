@@ -13,34 +13,34 @@ import java.util.Date;
 @Setter
 public class BucketlistViewResponseVO extends BaseResponseVO {
 
-  @JsonProperty("title")
+  @JsonProperty
   private String title;
 
-  @JsonProperty("open")
+  @JsonProperty
   private boolean open;
 
-  @JsonProperty("category")
+  @JsonProperty
   private String category;
 
-  @JsonProperty("d_day")
+  @JsonProperty
   private int dDay;
 
-  @JsonProperty("user_count")
+  @JsonProperty
   private int userCount;
 
-  @JsonProperty("goal_count")
+  @JsonProperty
   private int goalCount;
 
-  @JsonProperty("memo")
+  @JsonProperty
   private String memo;
 
-  @JsonProperty("img_url_1")
+  @JsonProperty
   private String imgUrl1;
 
-  @JsonProperty("img_url_2")
+  @JsonProperty
   private String imgUrl2;
 
-  @JsonProperty("img_url_3")
+  @JsonProperty
   private String imgUrl3;
 
   public BucketlistViewResponseVO(Bucketlist bucketlist) {

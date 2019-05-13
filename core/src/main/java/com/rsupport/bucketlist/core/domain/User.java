@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,10 +28,11 @@ import java.util.List;
 public class User {
 
   @Id
-  @GenericGenerator(name = "system-uuid", strategy = "uuid")
-  @GeneratedValue(generator = "system-uuid")
+  /*@GenericGenerator(name = "system-uuid", strategy = "uuid")
+  @GeneratedValue(generator = "system-uuid")*/
   private String id;
 
+  @Column
   private String email;
 
   @Column(name = "account_type")
@@ -51,6 +53,10 @@ public class User {
   @Column(name = "last_login_dt")
   private Date lastLoginDate;
 
+  @Column
   private boolean enabled;
+
+  @OneToMany(mappedBy = "user")
+  private List<Category> categoryList = new ArrayList<>();
 
 }

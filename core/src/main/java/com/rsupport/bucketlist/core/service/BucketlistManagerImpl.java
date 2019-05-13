@@ -60,4 +60,9 @@ public class BucketlistManagerImpl implements BucketlistManager {
 
   }
 
+  @Override
+  public String getLastBucketlistId() {
+    return bucketlistRepository.getLastBucketlistId();
+  }
+
 }

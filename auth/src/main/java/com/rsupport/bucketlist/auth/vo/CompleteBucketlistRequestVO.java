@@ -6,8 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HostCompleteBucketlistRequestVO {
+public class CompleteBucketlistRequestVO {
 
-    @JsonProperty("bucketlist_id")
-    private String bucketlistId;
+  @JsonProperty
+  private String bucketlistId;
 }

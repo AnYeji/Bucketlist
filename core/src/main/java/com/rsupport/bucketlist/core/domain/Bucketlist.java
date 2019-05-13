@@ -32,6 +32,7 @@ import java.util.List;
 public class Bucketlist {
 
   @Id
+  @Column
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
   @GeneratedValue(generator = "system-uuid")
   private String id;
@@ -40,12 +41,15 @@ public class Bucketlist {
   @Column(nullable = false)
   private String title;
 
+  @Column
   @ColumnDefault("0")
   private boolean open;
 
+  @Column
   @ColumnDefault("0")
   private boolean pin;
 
+  @Column
   @ColumnDefault("0")
   private boolean complete;
 
@@ -64,6 +68,7 @@ public class Bucketlist {
   private int goalCount;
 
   @Lob
+  @Column
   private String memo;
 
   @Column(name = "img_url_1")
