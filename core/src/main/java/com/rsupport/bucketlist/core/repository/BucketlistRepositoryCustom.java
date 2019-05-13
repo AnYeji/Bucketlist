@@ -11,4 +11,7 @@ public interface BucketlistRepositoryCustom {
   boolean existsPopupBucketlist(String userId, int popupPeriod);
 
   List<Bucketlist> getDDayBucketlists(String userId);
+
+  String getLastBucketlistId();
+
 }

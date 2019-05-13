@@ -1,14 +1,15 @@
 package com.rsupport.bucketlist.auth.controller;
 
 import com.rsupport.bucketlist.auth.constants.ApiUriConstants;
-import com.rsupport.bucketlist.auth.vo.BucketlistViewRequestVO;
+import com.rsupport.bucketlist.auth.vo.BeforeWriteResponseVO;
 import com.rsupport.bucketlist.auth.vo.BucketlistViewResponseVO;
-import com.rsupport.bucketlist.auth.vo.HostDDayRequestVO;
-import com.rsupport.bucketlist.auth.vo.HostDDayResponseVO;
-import com.rsupport.bucketlist.auth.vo.HostCompleteBucketlistRequestVO;
-import com.rsupport.bucketlist.auth.vo.HostHomeRequestVO;
-import com.rsupport.bucketlist.auth.vo.HostHomeResponseVO;
-import com.rsupport.bucketlist.auth.vo.HostPinBucketlistRequestVO;
+import com.rsupport.bucketlist.auth.vo.BucketlistWriteRequestVO;
+import com.rsupport.bucketlist.auth.vo.DDayRequestVO;
+import com.rsupport.bucketlist.auth.vo.DDayResponseVO;
+import com.rsupport.bucketlist.auth.vo.CompleteBucketlistRequestVO;
+import com.rsupport.bucketlist.auth.vo.HomeRequestVO;
+import com.rsupport.bucketlist.auth.vo.HomeResponseVO;
+import com.rsupport.bucketlist.auth.vo.PinBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageResponseVO;
 import com.rsupport.bucketlist.core.domain.Category;
@@ -34,7 +35,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +88,7 @@ public class HostController {
   }
 
   @GetMapping(value = ApiUriConstants.HOST_HOME)
-  public HostHomeResponseVO home(HostHomeRequestVO requestVO) {
+  public HomeResponseVO home(HomeRequestVO requestVO) {
     /*ParameterUtil.checkParameter(requestVO.getUserId(), requestVO.getToken());
     
     User user = userManager.getUserById(requestVO.getUserId());
@@ -102,11 +105,11 @@ public class HostController {
     }
     boolean popupYn = bucketlistManager.existsPopupBucketlist("user01", popupPeriodList);
 
-    return new HostHomeResponseVO(bucketlists, popupYn);
+    return new HomeResponseVO(bucketlists, popupYn);
   }
 
   @GetMapping(value = ApiUriConstants.HOST_D_DAY)
-  public HostDDayResponseVO dDay(HostDDayRequestVO requestVO) {
+  public DDayResponseVO dDay(DDayRequestVO requestVO) {
     /*ParameterUtil.checkParameter(requestVO.getUserId(), requestVO.getToken());
     
     User user = userManager.getUserById(requestVO.getUserId());
@@ -115,11 +118,11 @@ public class HostController {
       throw new InvalidTokenException();*/
 
     List<Bucketlist> bucketlists = bucketlistManager.getDDayBucketlists("user01");
-    return new HostDDayResponseVO(bucketlists);
+    return new DDayResponseVO(bucketlists);
   }
 
-  @PostMapping(value = ApiUriConstants.HOST_COMPLETE_BUCKETLIST)
-  public BaseResponseVO completeBucketlist(@RequestBody HostCompleteBucketlistRequestVO requestVO) {
+  @PostMapping(value = ApiUriConstants.HOST_BUCKETLIST_COMPLETE)
+  public BaseResponseVO completeBucketlist(@RequestBody CompleteBucketlistRequestVO requestVO) {
     Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
     bucketlist.setUserCount(bucketlist.getUserCount() + 1);
 
@@ -130,8 +133,8 @@ public class HostController {
     return BaseResponseVO.ok();
   }
 
-  @PostMapping(value = ApiUriConstants.HOST_PIN_BUCKETLIST)
-  public BaseResponseVO pinBucketlist(@RequestBody HostPinBucketlistRequestVO requestVO) {
+  @PostMapping(value = ApiUriConstants.HOST_BUCKETLIST_PIN)
+  public BaseResponseVO pinBucketlist(@RequestBody PinBucketlistRequestVO requestVO) {
     Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
     if (bucketlist.isPin()) {
       bucketlist.setPin(false);
@@ -143,25 +146,46 @@ public class HostController {
     return BaseResponseVO.ok();
   }
 
+  @GetMapping(value = ApiUriConstants.HOST_BUCKETLIST_BEFORE_WRITE)
+  public BeforeWriteResponseVO beforeWrite(String userId) {
+    User user = userManager.getUserById("user01");
+
+    return new BeforeWriteResponseVO(user.getCategoryList());
+  }
+
+  @PostMapping(value = ApiUriConstants.HOST_BUCKETLIST_WRITE)
+  public BaseResponseVO writeBucketlist(@RequestBody BucketlistWriteRequestVO requestVO) {
+    /*ParameterUtil.checkParameter(bucketlist);*/
+
+    Category category = categoryManager.getCategoryByCategoryId(requestVO.getCategoryId());
+
+    User user = userManager.getUserById(requestVO.getUserId());
+
+    Bucketlist bucketlist = new Bucketlist();
+    bucketlist.setTitle(requestVO.getTitle());
+    bucketlist.setOpen(requestVO.isOpen());
+    bucketlist.setGoalCount(requestVO.getGoalCount());
+    bucketlist.setDDate(requestVO.getDDate());
+    bucketlist.setMemo(requestVO.getMemo());
+    bucketlist.setCategory(category);
+    bucketlist.setUser(user);
+    bucketlistManager.saveBucketlist(bucketlist);
+
+    return BaseResponseVO.ok();
+  }
+
+  @PostMapping(value = ApiUriConstants.HOST_UPLOAD_IMAGE)
+  public BaseResponseVO uploadImage(MultipartFile multipartFile, HttpServletRequest request) {
+
+    return BaseResponseVO.ok();
+  }
+
   @GetMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
   public BucketlistViewResponseVO getBucketlist(String bucketlistId) {
     ParameterUtil.checkParameter(bucketlistId);
 
     Bucketlist bucketlist = bucketlistManager.getBucketlistById(bucketlistId);
     return new BucketlistViewResponseVO(bucketlist);
-  }
-
-  @GetMapping(value = ApiUriConstants.HOST_BEFORE_WRITE)
-  public List<Category> beforeWrite(){
-    return categoryManager.getCategoriesByUserId();
-  }
-
-  @PostMapping(value = ApiUriConstants.HOST_AFTER_WRITE)
-  public BaseResponseVO afterWrite(Bucketlist bucketlist) {
-    /*ParameterUtil.checkParameter(bucketlist);*/
-
-    bucketlistManager.saveBucketlist(bucketlist);
-    return BaseResponseVO.ok();
   }
 
   @DeleteMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)

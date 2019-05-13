@@ -22,17 +22,22 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
     JPAQuery query = new JPAQuery(entityManager);
     QBucketlist bucketlist = QBucketlist.bucketlist;
 
-    query.from(bucketlist).where(bucketlist.user().id.eq(userId)).orderBy(bucketlist.pin.desc());
+    query.from(bucketlist)
+            .where(bucketlist.user().id.eq(userId))
+            .orderBy(bucketlist.pin.desc());
+
     return query.list(bucketlist);
   }
 
   @Override
   public boolean existsPopupBucketlist(String userId, int popupPeriod) {
     JPAQuery query = new JPAQuery(entityManager);
-    QUser user = QUser.user;
     QBucketlist bucketlist = QBucketlist.bucketlist;
 
-    query.from(bucketlist).where(bucketlist.user().id.eq(userId).and(bucketlist.dDate.eq(DateUtil.addDays(DateUtil.getDate(), popupPeriod))));
+    query.from(bucketlist)
+            .where(bucketlist.user().id.eq(userId)
+                    .and(bucketlist.dDate.eq(DateUtil.addDays(DateUtil.getDate(), popupPeriod))));
+
     return query.exists();
   }
 
@@ -41,7 +46,21 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
     JPAQuery query = new JPAQuery(entityManager);
     QBucketlist bucketlist = QBucketlist.bucketlist;
 
-    query.from(bucketlist).where(bucketlist.dDate.isNotNull()).orderBy(bucketlist.dDate.asc());
+    query.from(bucketlist)
+            .where(bucketlist.dDate.isNotNull())
+            .orderBy(bucketlist.dDate.asc())
+            .groupBy(bucketlist.dDate);
+
     return query.list(bucketlist);
+  }
+
+  @Override
+  public String getLastBucketlistId() {
+    JPAQuery query = new JPAQuery(entityManager);
+    QBucketlist bucketlist = QBucketlist.bucketlist;
+
+    query.from(bucketlist);
+
+    return query.singleResult(bucketlist.id);
   }
 }

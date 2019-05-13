@@ -6,9 +6,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HostHomeRequestVO {
+public class HomeRequestVO {
 
-  @JsonProperty("user_id")
+  @JsonProperty
   private String userId;
 
   /*@JsonProperty("token")

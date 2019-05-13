@@ -1,14 +1,16 @@
 package com.rsupport.bucketlist.auth.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class HostPinBucketlistRequestVO {
+public class DDayRequestVO {
 
-    @JsonProperty("bucketlist_id")
-    private String bucketlistId;
+  @JsonProperty
+  private String userId;
+
+  /*@JsonProperty("token")
+  private String token;*/
 }

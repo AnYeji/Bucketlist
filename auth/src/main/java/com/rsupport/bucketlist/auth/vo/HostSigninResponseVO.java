@@ -10,10 +10,10 @@ import lombok.Setter;
 @Setter
 public class HostSigninResponseVO extends BaseResponseVO{
 
-  @JsonProperty("access_token")
+  @JsonProperty
   private String accessToken;
 
-  @JsonProperty("refresh_token")
+  @JsonProperty
   private String refreshToken;
 
   public HostSigninResponseVO(String accessToken, String refreshToken){

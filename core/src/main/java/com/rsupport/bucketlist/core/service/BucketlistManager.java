@@ -18,4 +18,6 @@ public interface BucketlistManager {
 
   void deleteBucketlist(String bucketlistId);
 
+  String getLastBucketlistId();
+
 }

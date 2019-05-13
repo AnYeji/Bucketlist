@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class HostSignupCheckRequestVO {
 
-  @JsonProperty("user_id")
+  @JsonProperty
   private String userId;
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class HostHomeResponseVO extends BaseResponseVO {
+public class HomeResponseVO extends BaseResponseVO {
 
   @JsonProperty
   private List<Bucketlist> bucketlists;
@@ -19,11 +19,11 @@ public class HostHomeResponseVO extends BaseResponseVO {
   @JsonProperty
   private boolean popupYn;
 
-  public HostHomeResponseVO(String returnCode) {
+  public HomeResponseVO(String returnCode) {
     super(returnCode);
   }
 
-  public HostHomeResponseVO(List<Bucketlist> bucketlists, boolean popupYn) {
+  public HomeResponseVO(List<Bucketlist> bucketlists, boolean popupYn) {
     super(ApiReturnCodes.OK);
     this.bucketlists = bucketlists;
     this.popupYn = popupYn;

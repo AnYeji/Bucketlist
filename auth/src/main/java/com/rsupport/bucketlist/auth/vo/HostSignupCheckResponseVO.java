@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class HostSignupCheckResponseVO {
 
-  @JsonProperty("signuped")
+  @JsonProperty
   private boolean signuped;
 
   public HostSignupCheckResponseVO(boolean signuped) {

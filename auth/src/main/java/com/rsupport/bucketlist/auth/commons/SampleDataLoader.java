@@ -33,6 +33,7 @@ public class SampleDataLoader implements ApplicationRunner {
 
   private void createSampleData() {
     User user = new User();
+    user.setId("user01");
     user.setNickName("user01");
     userRepository.save(user);
 
@@ -55,6 +56,11 @@ public class SampleDataLoader implements ApplicationRunner {
     category4.setName("여행");
     category4.setUser(user);
     categoryRepository.save(category4);
+
+    Category category5 = new Category();
+    category5.setName("기타");
+    category5.setUser(user);
+    categoryRepository.save(category5);
 
     Bucketlist bucketlist1 = new Bucketlist();
     bucketlist1.setTitle("올림픽공원에서 스케이트 타기");
