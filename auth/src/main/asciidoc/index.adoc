@@ -126,3 +126,14 @@ include::{snippets}/test-write/http-request.adoc[]
 === response
 
 include::{snippets}/test-write/http-response.adoc[]
+
+
+== 버킷리스트 이미지 업로드 [post]
+
+=== request
+
+include::{snippets}/test-image-upload/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-image-upload/http-response.adoc[]

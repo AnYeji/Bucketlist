@@ -58,7 +58,7 @@ public class SampleDataLoader implements ApplicationRunner {
     categoryRepository.save(category4);
 
     Category category5 = new Category();
-    category5.setName("기타");
+    category5.setName("ETC");
     category5.setUser(user);
     categoryRepository.save(category5);
 

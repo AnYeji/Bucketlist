@@ -27,7 +27,7 @@ public class BucketlistWriteRequestVO extends BaseRequestVO{
   private String memo;
 
   @JsonProperty
-  private String categoryId;
+  private String categoryName;
 
   @JsonProperty
   private String userId;

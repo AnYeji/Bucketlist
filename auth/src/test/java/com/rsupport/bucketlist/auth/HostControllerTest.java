@@ -140,13 +140,21 @@ public class HostControllerTest {
     requestVO.setGoalCount(10);
     requestVO.setDDate(DateUtil.addDays(DateUtil.getDate(), 3));
     requestVO.setMemo("memo");
-    requestVO.setCategoryId(categoryId);
+    requestVO.setCategoryName("ETC");
     requestVO.setUserId("user01");
 
     this.mockMvc.perform(post(ApiUriConstants.HOST_BUCKETLIST_WRITE)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(requestVO)))
+            .andExpect(status().isOk());
+  }
+
+  @Test
+  public void testImageUpload() throws Exception{
+    this.mockMvc.perform(post(ApiUriConstants.HOST_IMAGE_UPLOAD)
+            .contentType(MediaType.MULTIPART_FORM_DATA)
+            .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
   }
 }

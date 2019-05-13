@@ -1,5 +1,6 @@
 package com.rsupport.bucketlist.core.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -7,6 +8,15 @@ public class DateUtil {
 
   public static Date getDate() {
     return new Date();
+  }
+
+  public static String getDateString(String format) {
+    return getDateString(new Date(), format);
+  }
+
+  public static String getDateString(Date date, String format) {
+    SimpleDateFormat df = new SimpleDateFormat(format);
+    return df.format(date);
   }
 
   private static long getDateDiff(Date source, Date target) {

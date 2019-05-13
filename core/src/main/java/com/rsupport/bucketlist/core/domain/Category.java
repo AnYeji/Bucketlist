@@ -15,16 +15,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Data
 @Entity
-@Table(name = "mt_category")
+@Table(name = "mt_category", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "userId"}))
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(value = {"user"})
+@JsonIgnoreProperties(value = {"id", "user"})
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Category {
 
   @Id
+  @Column
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
   @GeneratedValue(generator = "system-uuid")
   private String id;

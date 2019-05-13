@@ -14,6 +14,9 @@ import com.rsupport.bucketlist.auth.vo.MyPageRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageResponseVO;
 import com.rsupport.bucketlist.core.domain.Category;
 import com.rsupport.bucketlist.core.service.CategoryManager;
+import com.rsupport.bucketlist.core.service.FileUploadService;
+import com.rsupport.bucketlist.core.util.DateUtil;
+import com.rsupport.bucketlist.core.util.FileUtil;
 import com.rsupport.bucketlist.core.util.JwtUtils;
 import com.rsupport.bucketlist.core.util.ParameterUtil;
 import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
@@ -36,10 +39,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -56,6 +62,9 @@ public class HostController {
 
   @Autowired
   private CategoryManager categoryManager;
+
+  @Autowired
+  private FileUploadService fileUploadService;
 
   /*@Autowired
   private ServicePropertiesUtil servicePropertiesUtil;*/
@@ -157,9 +166,9 @@ public class HostController {
   public BaseResponseVO writeBucketlist(@RequestBody BucketlistWriteRequestVO requestVO) {
     /*ParameterUtil.checkParameter(bucketlist);*/
 
-    Category category = categoryManager.getCategoryByCategoryId(requestVO.getCategoryId());
+    Category category = categoryManager.getCategoryByName(requestVO.getCategoryName());
 
-    User user = userManager.getUserById(requestVO.getUserId());
+    User user = userManager.getUserById("user01");
 
     Bucketlist bucketlist = new Bucketlist();
     bucketlist.setTitle(requestVO.getTitle());
@@ -174,8 +183,14 @@ public class HostController {
     return BaseResponseVO.ok();
   }
 
-  @PostMapping(value = ApiUriConstants.HOST_UPLOAD_IMAGE)
-  public BaseResponseVO uploadImage(MultipartFile multipartFile, HttpServletRequest request) {
+  @PostMapping(value = ApiUriConstants.HOST_IMAGE_UPLOAD)
+  public BaseResponseVO bucketlistImageUpload(HttpServletRequest request) {
+    MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
+    Iterator<String> iterator = multipartRequest.getFileNames();
+    while(iterator.hasNext()) {
+      MultipartFile file = multipartRequest.getFile(iterator.next());
+      fileUploadService.upload(file);
+    }
 
     return BaseResponseVO.ok();
   }
