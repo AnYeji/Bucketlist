@@ -19,6 +19,7 @@ import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -151,10 +152,22 @@ public class HostControllerTest {
   }
 
   @Test
-  public void testImageUpload() throws Exception{
+  public void testImageUpload() throws Exception {
     this.mockMvc.perform(post(ApiUriConstants.HOST_IMAGE_UPLOAD)
             .contentType(MediaType.MULTIPART_FORM_DATA)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
+  }
+
+  @Test
+  public void testGetBucketlist() throws Exception {
+    /*this.mockMvc.perform(get(StringUtils.replace(ApiUriConstants.HOST_BUCKETLIST_CRUD, "{bucketlistId}", "8a81e5216b88eaab016b88eac1cd0005"))
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());*/
+  }
+
+  @Test
+  public void testModifyBucketlist() throws Exception {
+
   }
 }

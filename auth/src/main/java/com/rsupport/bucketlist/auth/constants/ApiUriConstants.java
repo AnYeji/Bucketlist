@@ -15,7 +15,7 @@ public class ApiUriConstants {
 
   public static final String HOST_BUCKETLIST_BEFORE_WRITE = HOST + "/beforeWrite";
   public static final String HOST_BUCKETLIST_WRITE = HOST + "/write";
-  public static final String HOST_BUCKETLIST_CRUD = HOST + "/{bucketlistId}";
+  public static final String HOST_BUCKETLIST_CRUD = HOST + "/bucketlist/{id}";
 
   public static final String HOST_IMAGE_UPLOAD = HOST + "/imageUpload";
 

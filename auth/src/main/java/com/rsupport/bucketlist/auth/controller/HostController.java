@@ -15,8 +15,6 @@ import com.rsupport.bucketlist.auth.vo.MyPageResponseVO;
 import com.rsupport.bucketlist.core.domain.Category;
 import com.rsupport.bucketlist.core.service.CategoryManager;
 import com.rsupport.bucketlist.core.service.FileUploadService;
-import com.rsupport.bucketlist.core.util.DateUtil;
-import com.rsupport.bucketlist.core.util.FileUtil;
 import com.rsupport.bucketlist.core.util.JwtUtils;
 import com.rsupport.bucketlist.core.util.ParameterUtil;
 import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
@@ -45,7 +43,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -164,8 +161,6 @@ public class HostController {
 
   @PostMapping(value = ApiUriConstants.HOST_BUCKETLIST_WRITE)
   public BaseResponseVO writeBucketlist(@RequestBody BucketlistWriteRequestVO requestVO) {
-    /*ParameterUtil.checkParameter(bucketlist);*/
-
     Category category = categoryManager.getCategoryByName(requestVO.getCategoryName());
 
     User user = userManager.getUserById("user01");
@@ -186,9 +181,13 @@ public class HostController {
   @PostMapping(value = ApiUriConstants.HOST_IMAGE_UPLOAD)
   public BaseResponseVO bucketlistImageUpload(HttpServletRequest request) {
     MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request;
+    log.info(multipartRequest.getFileMap()+"zzzzzzzzzzzzzzzzzzzzz");
     Iterator<String> iterator = multipartRequest.getFileNames();
     while(iterator.hasNext()) {
+      log.info("image upload");
       MultipartFile file = multipartRequest.getFile(iterator.next());
+      log.info(file.getOriginalFilename()+"aaaaaaaaaaaaa");
+      log.info(file.getSize()+"bbbbbbbbbbbbbbbbbbb");
       fileUploadService.upload(file);
     }
 
@@ -196,11 +195,30 @@ public class HostController {
   }
 
   @GetMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
-  public BucketlistViewResponseVO getBucketlist(String bucketlistId) {
-    ParameterUtil.checkParameter(bucketlistId);
+  public BucketlistViewResponseVO getBucketlist(@PathVariable String id) {
+    ParameterUtil.checkParameter(id);
 
-    Bucketlist bucketlist = bucketlistManager.getBucketlistById(bucketlistId);
+    Bucketlist bucketlist = bucketlistManager.getBucketlistById(id);
     return new BucketlistViewResponseVO(bucketlist);
+  }
+
+  @PostMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
+  public BaseResponseVO modifyBucketlist(@PathVariable String id, BucketlistWriteRequestVO requestVO) {
+    Category category = categoryManager.getCategoryByName(requestVO.getCategoryName());
+
+    User user = userManager.getUserById("user01");
+
+    Bucketlist bucketlist = bucketlistManager.getBucketlistById(id);
+    bucketlist.setTitle(requestVO.getTitle());
+    bucketlist.setOpen(requestVO.isOpen());
+    bucketlist.setGoalCount(requestVO.getGoalCount());
+    bucketlist.setDDate(requestVO.getDDate());
+    bucketlist.setMemo(requestVO.getMemo());
+    bucketlist.setCategory(category);
+    bucketlist.setUser(user);
+    bucketlistManager.saveBucketlist(bucketlist);
+
+    return BaseResponseVO.ok();
   }
 
   @DeleteMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
