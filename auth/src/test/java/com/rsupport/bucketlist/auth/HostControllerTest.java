@@ -168,6 +168,27 @@ public class HostControllerTest {
 
   @Test
   public void testModifyBucketlist() throws Exception {
+    this.mockMvc.perform(post(ApiUriConstants.HOST_BUCKETLIST_CRUD))
+  }
+
+  @Test
+  public void testDeleteBucketlist() {
 
   }
+
+  @Test
+  public void testMyPage() {
+
+  }
+
+  @Test
+  public void modifyCategory() {
+
+  }
+
+  @Test
+  public void removeCategory() {
+
+  }
+
 }

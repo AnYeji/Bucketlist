@@ -1,6 +1,9 @@
 package com.rsupport.bucketlist.auth.controller;
 
 import com.rsupport.bucketlist.auth.constants.ApiUriConstants;
+import com.rsupport.bucketlist.core.vo.ModifyCategoryRequestVO;
+import com.rsupport.bucketlist.core.vo.RemoveCategoryRequestVO;
+import com.rsupport.bucketlist.core.constants.CommonCodes;
 import com.rsupport.bucketlist.auth.vo.BeforeWriteResponseVO;
 import com.rsupport.bucketlist.auth.vo.BucketlistViewResponseVO;
 import com.rsupport.bucketlist.auth.vo.BucketlistWriteRequestVO;
@@ -12,6 +15,7 @@ import com.rsupport.bucketlist.auth.vo.HomeResponseVO;
 import com.rsupport.bucketlist.auth.vo.PinBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageRequestVO;
 import com.rsupport.bucketlist.auth.vo.MyPageResponseVO;
+import com.rsupport.bucketlist.core.constants.ApiReturnCodes;
 import com.rsupport.bucketlist.core.domain.Category;
 import com.rsupport.bucketlist.core.service.CategoryManager;
 import com.rsupport.bucketlist.core.service.FileUploadService;
@@ -41,8 +45,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -123,7 +129,7 @@ public class HostController {
     if (!isValidToken)
       throw new InvalidTokenException();*/
 
-    List<Bucketlist> bucketlists = bucketlistManager.getDDayBucketlists("user01");
+    List<Bucketlist> bucketlists = bucketlistManager.getDDayBucketlist("user01");
     return new DDayResponseVO(bucketlists);
   }
 
@@ -133,7 +139,7 @@ public class HostController {
     bucketlist.setUserCount(bucketlist.getUserCount() + 1);
 
     if (bucketlist.getUserCount() == bucketlist.getGoalCount())
-      bucketlist.setComplete(true);
+      bucketlist.setStatus(CommonCodes.BucketlistStatus.AFTER);
 
     bucketlistManager.saveBucketlist(bucketlist);
     return BaseResponseVO.ok();
@@ -226,14 +232,59 @@ public class HostController {
     ParameterUtil.checkParameter(bucketlistId);
 
     bucketlistManager.deleteBucketlist(bucketlistId);
+
     return BaseResponseVO.ok();
   }
 
   @GetMapping(value = ApiUriConstants.HOST_MYPAGE)
   public MyPageResponseVO mypage(MyPageRequestVO requstVO) {
-    ParameterUtil.checkParameter(requstVO.getUserId());
+    /*ParameterUtil.checkParameter(requstVO.getUserId());*/
 
-    User user = userManager.getUserById(requstVO.getUserId());
-    return new MyPageResponseVO(user);
+    User user = userManager.getUserById("user01");
+
+    MyPageResponseVO responseVO = new MyPageResponseVO();
+    responseVO.setName(user.getName());
+    responseVO.setImageUrl(user.getImgUrl());
+
+    int startedCount = bucketlistManager.getStartedBucklistCount(user.getId());
+    responseVO.setStartedCount(startedCount);
+
+    int completedCount = bucketlistManager.getCompletedBucketlistCount(user.getId());
+    responseVO.setCompletedCount(completedCount);
+
+    int dDayCount = bucketlistManager.getDDayBucketlist(user.getId()).size();
+    responseVO.setDDayCount(dDayCount);
+
+    Map<String, Integer> categoryMap = setCategoryMap(user);
+    responseVO.setCategoryMap(categoryMap);
+
+    responseVO.setReturnCode(ApiReturnCodes.OK);
+    return responseVO;
+  }
+
+  private Map<String, Integer> setCategoryMap(User user) {
+    Map<String, Integer> categoryMap = new HashMap<>();
+    for(Category category : user.getCategoryList()) {
+      int categoryCount = 0;
+      for(Bucketlist bucketlist : user.getBucketlists()) {
+        if(category.equals(bucketlist.getCategory())) {
+          categoryCount++;
+        }
+      }
+      categoryMap.put(category.getName(), categoryCount);
+    }
+    return categoryMap;
+  }
+
+  @PostMapping(value = ApiUriConstants.HOST_CATEGORY)
+  public BaseResponseVO modifyCategory(ModifyCategoryRequestVO requestVO) {
+    categoryManager.modify(requestVO);
+    return BaseResponseVO.ok();
+  }
+
+  @DeleteMapping(value = ApiUriConstants.HOST_CATEGORY)
+  public BaseResponseVO removeCategory(RemoveCategoryRequestVO requestVO) {
+    categoryManager.remove(requestVO.getCategoryId());
+    return BaseResponseVO.ok();
   }
 }

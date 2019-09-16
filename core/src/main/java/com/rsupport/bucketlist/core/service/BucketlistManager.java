@@ -10,13 +10,17 @@ public interface BucketlistManager {
 
   boolean existsPopupBucketlist(String userId, List<Integer> popupPeriodList);
 
-  List<Bucketlist> getDDayBucketlists(String userId);
+  List<Bucketlist> getDDayBucketlist(String userId);
 
   Bucketlist getBucketlistById(String bucketlistId);
 
   Bucketlist saveBucketlist(Bucketlist bucketlist);
 
   void deleteBucketlist(String bucketlistId);
+
+  int getStartedBucklistCount(String userId);
+
+  int getCompletedBucketlistCount(String userId);
 
   String getLastBucketlistId();
 

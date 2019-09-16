@@ -10,8 +10,11 @@ public interface BucketlistRepositoryCustom {
 
   boolean existsPopupBucketlist(String userId, int popupPeriod);
 
-  List<Bucketlist> getDDayBucketlists(String userId);
+  List<Bucketlist> getDDayBucketlist(String userId);
 
   String getLastBucketlistId();
 
+  int getStartedBucketlistCount(String userId);
+
+  int getCompletedBucketlistCount(String userId);
 }

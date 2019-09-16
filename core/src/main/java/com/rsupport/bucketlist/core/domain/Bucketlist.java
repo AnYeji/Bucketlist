@@ -51,7 +51,7 @@ public class Bucketlist {
 
   @Column
   @ColumnDefault("0")
-  private boolean complete;
+  private String status;
 
   @Column(name = "d_date")
   private Date dDate;
@@ -90,7 +90,7 @@ public class Bucketlist {
   private Category category;
 
   @ManyToOne
-  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  @JoinColumn(name = "user_id")
   private User user;
 
   @Transient

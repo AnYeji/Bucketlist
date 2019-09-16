@@ -13,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
@@ -38,8 +39,8 @@ public class User {
   @Column(name = "account_type")
   private int accountType;
 
-  @Column(name = "nick_name")
-  private String nickName;
+  @Column(name = "name")
+  private String name;
 
   @Column(name = "img_url")
   private String imgUrl;
@@ -59,4 +60,6 @@ public class User {
   @OneToMany(mappedBy = "user")
   private List<Category> categoryList = new ArrayList<>();
 
+  @OneToMany(mappedBy = "user")
+  private List<Bucketlist> bucketlists = new ArrayList<>();
 }

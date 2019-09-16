@@ -1,6 +1,7 @@
 package com.rsupport.bucketlist.core.repository;
 
 import com.mysema.query.jpa.impl.JPAQuery;
+import com.rsupport.bucketlist.core.constants.CommonCodes;
 import com.rsupport.bucketlist.core.domain.Bucketlist;
 import com.rsupport.bucketlist.core.domain.QBucketlist;
 import com.rsupport.bucketlist.core.domain.QUser;
@@ -42,7 +43,7 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
   }
 
   @Override
-  public List<Bucketlist> getDDayBucketlists(String userId) {
+  public List<Bucketlist> getDDayBucketlist(String userId) {
     JPAQuery query = new JPAQuery(entityManager);
     QBucketlist bucketlist = QBucketlist.bucketlist;
 
@@ -62,5 +63,25 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
     query.from(bucketlist);
 
     return query.singleResult(bucketlist.id);
+  }
+
+  @Override
+  public int getStartedBucketlistCount(String userId) {
+    JPAQuery query = new JPAQuery(entityManager);
+    QBucketlist bucketlist = QBucketlist.bucketlist;
+
+    query.from(bucketlist).where(bucketlist.user().id.eq(userId).and(bucketlist.status.ne(CommonCodes.BucketlistStatus.BEFORE)));
+
+    return (int)query.count();
+  }
+
+  @Override
+  public int getCompletedBucketlistCount(String userId) {
+    JPAQuery query = new JPAQuery(entityManager);
+    QBucketlist bucketlist = QBucketlist.bucketlist;
+
+    query.from(bucketlist).where(bucketlist.user().id.eq(userId).and(bucketlist.status.eq(CommonCodes.BucketlistStatus.AFTER)));
+
+    return (int)query.count();
   }
 }

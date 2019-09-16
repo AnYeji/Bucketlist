@@ -19,7 +19,7 @@ import javax.persistence.UniqueConstraint;
 
 @Data
 @Entity
-@Table(name = "mt_category", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "userId"}))
+@Table(name = "mt_category", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "user_id"}))
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(value = {"id", "user"})
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
@@ -34,8 +34,10 @@ public class Category {
   @Column
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "userId")
-  private User user;
+  @Column
+  private int priority;
 
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 }

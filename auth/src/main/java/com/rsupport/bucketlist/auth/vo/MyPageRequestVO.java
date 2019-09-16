@@ -8,6 +8,5 @@ import lombok.Setter;
 @Setter
 public class MyPageRequestVO {
 
-  @JsonProperty
   private String userId;
 }

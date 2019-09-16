@@ -35,8 +35,8 @@ public class BucketlistManagerImpl implements BucketlistManager {
   }
 
   @Override
-  public List<Bucketlist> getDDayBucketlists(String userId) {
-    List<Bucketlist> bucketlists = bucketlistRepository.getDDayBucketlists(userId);
+  public List<Bucketlist> getDDayBucketlist(String userId) {
+    List<Bucketlist> bucketlists = bucketlistRepository.getDDayBucketlist(userId);
 
     for(Bucketlist bucketlist : bucketlists){
       bucketlist.setDDay(DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getDate()));
@@ -57,7 +57,17 @@ public class BucketlistManagerImpl implements BucketlistManager {
 
   @Override
   public void deleteBucketlist(String bucketlistId) {
+    bucketlistRepository.deleteById(bucketlistId);
+  }
 
+  @Override
+  public int getStartedBucklistCount(String userId) {
+    return bucketlistRepository.getStartedBucketlistCount(userId);
+  }
+
+  @Override
+  public int getCompletedBucketlistCount(String userId) {
+    return bucketlistRepository.getCompletedBucketlistCount(userId);
   }
 
   @Override

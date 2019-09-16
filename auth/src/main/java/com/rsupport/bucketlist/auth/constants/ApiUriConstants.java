@@ -20,6 +20,7 @@ public class ApiUriConstants {
   public static final String HOST_IMAGE_UPLOAD = HOST + "/imageUpload";
 
   public static final String HOST_MYPAGE = HOST + "/mypage";
+  public static final String HOST_CATEGORY = HOST + "/category";
 
   public static final String HOST_RANKING = HOST + "/ranking";
   public static final String HOST_SEARCH = HOST + "/search";
