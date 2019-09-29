@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HostSigninRequestVO {
+public class SigninRequestVO {
 
   @JsonProperty("user_id")
   private String userId;

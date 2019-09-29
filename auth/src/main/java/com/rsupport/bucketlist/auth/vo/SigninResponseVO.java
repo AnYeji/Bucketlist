@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HostSigninResponseVO extends BaseResponseVO{
+public class SigninResponseVO extends BaseResponseVO{
 
   @JsonProperty
   private String accessToken;
@@ -16,7 +16,7 @@ public class HostSigninResponseVO extends BaseResponseVO{
   @JsonProperty
   private String refreshToken;
 
-  public HostSigninResponseVO(String accessToken, String refreshToken){
+  public SigninResponseVO(String accessToken, String refreshToken){
     super(ApiReturnCodes.OK);
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;

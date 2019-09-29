@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class BucketlistWriteRequestVO extends BaseRequestVO{
+public class WriteBucketlistRequestVO extends BaseRequestVO{
 
   @JsonProperty
   private String title;

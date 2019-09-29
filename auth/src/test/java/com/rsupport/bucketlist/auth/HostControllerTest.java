@@ -2,7 +2,7 @@ package com.rsupport.bucketlist.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rsupport.bucketlist.auth.constants.ApiUriConstants;
-import com.rsupport.bucketlist.auth.vo.BucketlistWriteRequestVO;
+import com.rsupport.bucketlist.auth.vo.WriteBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.CompleteBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.PinBucketlistRequestVO;
 import com.rsupport.bucketlist.core.service.BucketlistManager;
@@ -19,7 +19,6 @@ import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -135,7 +134,7 @@ public class HostControllerTest {
   public void testWrite() throws Exception {
     String categoryId = categoryManager.getLastCategoryId();
 
-    BucketlistWriteRequestVO requestVO = new BucketlistWriteRequestVO();
+    WriteBucketlistRequestVO requestVO = new WriteBucketlistRequestVO();
     requestVO.setTitle("eat pray love");
     requestVO.setOpen(true);
     requestVO.setGoalCount(10);
@@ -168,7 +167,7 @@ public class HostControllerTest {
 
   @Test
   public void testModifyBucketlist() throws Exception {
-    this.mockMvc.perform(post(ApiUriConstants.HOST_BUCKETLIST_CRUD))
+    /*this.mockMvc.perform(post(ApiUriConstants.HOST_BUCKETLIST_CRUD))*/
   }
 
   @Test

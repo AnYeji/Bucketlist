@@ -1,12 +1,14 @@
 package com.rsupport.bucketlist.auth.controller;
 
 import com.rsupport.bucketlist.auth.constants.ApiUriConstants;
+import com.rsupport.bucketlist.auth.vo.RemoveAccountRequestVO;
+import com.rsupport.bucketlist.auth.vo.UpdateProfileRequestVO;
 import com.rsupport.bucketlist.core.vo.ModifyCategoryRequestVO;
 import com.rsupport.bucketlist.core.vo.RemoveCategoryRequestVO;
 import com.rsupport.bucketlist.core.constants.CommonCodes;
 import com.rsupport.bucketlist.auth.vo.BeforeWriteResponseVO;
 import com.rsupport.bucketlist.auth.vo.BucketlistViewResponseVO;
-import com.rsupport.bucketlist.auth.vo.BucketlistWriteRequestVO;
+import com.rsupport.bucketlist.auth.vo.WriteBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.DDayRequestVO;
 import com.rsupport.bucketlist.auth.vo.DDayResponseVO;
 import com.rsupport.bucketlist.auth.vo.CompleteBucketlistRequestVO;
@@ -21,14 +23,14 @@ import com.rsupport.bucketlist.core.service.CategoryManager;
 import com.rsupport.bucketlist.core.service.FileUploadService;
 import com.rsupport.bucketlist.core.util.JwtUtils;
 import com.rsupport.bucketlist.core.util.ParameterUtil;
-import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
-import com.rsupport.bucketlist.auth.vo.HostSigninResponseVO;
-import com.rsupport.bucketlist.auth.vo.HostSignupCheckRequestVO;
-import com.rsupport.bucketlist.auth.vo.HostSignupCheckResponseVO;
+import com.rsupport.bucketlist.core.vo.SigninRequestVO;
+import com.rsupport.bucketlist.auth.vo.SigninResponseVO;
+import com.rsupport.bucketlist.auth.vo.SignupCheckRequestVO;
+import com.rsupport.bucketlist.auth.vo.SignupCheckResponseVO;
 import com.rsupport.bucketlist.core.base.BaseResponseVO;
 import com.rsupport.bucketlist.core.domain.User;
-import com.rsupport.bucketlist.core.vo.HostSignupRequestVO;
-import com.rsupport.bucketlist.core.vo.HostSignupResponseVO;
+import com.rsupport.bucketlist.core.vo.SignupRequestVO;
+import com.rsupport.bucketlist.core.vo.SignupResponseVO;
 import com.rsupport.bucketlist.core.domain.Bucketlist;
 import com.rsupport.bucketlist.core.service.BucketlistManager;
 import com.rsupport.bucketlist.core.service.UserManager;
@@ -73,30 +75,30 @@ public class HostController {
   private ServicePropertiesUtil servicePropertiesUtil;*/
 
   @GetMapping(value = ApiUriConstants.HOST_SIGNUP_CHECK)
-  public HostSignupCheckResponseVO signupCheck(HostSignupCheckRequestVO requestVO) {
+  public SignupCheckResponseVO signupCheck(SignupCheckRequestVO requestVO) {
     ParameterUtil.checkParameter(requestVO.getUserId());
 
     User user = userManager.getUserById(requestVO.getUserId());
     boolean signuped = (user != null);
-    return new HostSignupCheckResponseVO(signuped);
+    return new SignupCheckResponseVO(signuped);
   }
 
   @PostMapping(value = ApiUriConstants.HOST_SIGNUP)
-  public HostSignupResponseVO signup(HostSignupRequestVO requestVO) {
+  public SignupResponseVO signup(SignupRequestVO requestVO) {
     ParameterUtil.checkParameter(requestVO.getEmail(), requestVO.getAccountType());
 
     User user = userManager.signup(requestVO);
-    return new HostSignupResponseVO(user);
+    return new SignupResponseVO(user);
   }
 
   @GetMapping(value = ApiUriConstants.HOST_SIGNIN)
-  public HostSigninResponseVO signin(HostSigninRequestVO requestVO) {
+  public SigninResponseVO signin(SigninRequestVO requestVO) {
     ParameterUtil.checkParameter(requestVO.getUserId());
 
     User user = userManager.signin(requestVO);
     String accessToken = jwtUtils.createAccessToken(user.getEmail());
     String refreshToken = jwtUtils.createRefreshToken(accessToken);
-    return new HostSigninResponseVO(accessToken, refreshToken);
+    return new SigninResponseVO(accessToken, refreshToken);
   }
 
   @GetMapping(value = ApiUriConstants.HOST_HOME)
@@ -166,7 +168,7 @@ public class HostController {
   }
 
   @PostMapping(value = ApiUriConstants.HOST_BUCKETLIST_WRITE)
-  public BaseResponseVO writeBucketlist(@RequestBody BucketlistWriteRequestVO requestVO) {
+  public BaseResponseVO writeBucketlist(@RequestBody WriteBucketlistRequestVO requestVO) {
     Category category = categoryManager.getCategoryByName(requestVO.getCategoryName());
 
     User user = userManager.getUserById("user01");
@@ -209,7 +211,7 @@ public class HostController {
   }
 
   @PostMapping(value = ApiUriConstants.HOST_BUCKETLIST_CRUD)
-  public BaseResponseVO modifyBucketlist(@PathVariable String id, BucketlistWriteRequestVO requestVO) {
+  public BaseResponseVO modifyBucketlist(@PathVariable String id, WriteBucketlistRequestVO requestVO) {
     Category category = categoryManager.getCategoryByName(requestVO.getCategoryName());
 
     User user = userManager.getUserById("user01");
@@ -276,15 +278,31 @@ public class HostController {
     return categoryMap;
   }
 
+  @PostMapping(value = ApiUriConstants.HOST_PROFILE)
+  public BaseResponseVO updateProfile(@RequestBody UpdateProfileRequestVO requestVO) {
+    User user = userManager.getUserById(requestVO.getUserId());
+    user.setName(requestVO.getName());
+    user.setImgUrl("");
+    return BaseResponseVO.ok();
+  }
+
   @PostMapping(value = ApiUriConstants.HOST_CATEGORY)
-  public BaseResponseVO modifyCategory(ModifyCategoryRequestVO requestVO) {
+  public BaseResponseVO modifyCategory(@RequestBody ModifyCategoryRequestVO requestVO) {
     categoryManager.modify(requestVO);
     return BaseResponseVO.ok();
   }
 
   @DeleteMapping(value = ApiUriConstants.HOST_CATEGORY)
-  public BaseResponseVO removeCategory(RemoveCategoryRequestVO requestVO) {
+  public BaseResponseVO removeCategory(@RequestBody RemoveCategoryRequestVO requestVO) {
     categoryManager.remove(requestVO.getCategoryId());
     return BaseResponseVO.ok();
   }
+
+  @DeleteMapping(value = ApiUriConstants.HOST_ACCOUNT)
+  public BaseResponseVO removeAccount(@RequestBody RemoveAccountRequestVO requestVO) {
+    userManager.deleteById(requestVO.getUserId());
+    return BaseResponseVO.ok();
+  }
+
+  //개인정보처리방침, 이용약관
 }

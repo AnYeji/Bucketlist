@@ -6,12 +6,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HostSignupCheckResponseVO {
+public class SignupCheckResponseVO {
 
   @JsonProperty
   private boolean signuped;
 
-  public HostSignupCheckResponseVO(boolean signuped) {
+  public SignupCheckResponseVO(boolean signuped) {
     this.signuped = signuped;
   }
 }

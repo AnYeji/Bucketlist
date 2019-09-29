@@ -6,9 +6,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HostSignupCheckRequestVO {
+public class UpdateProfileRequestVO {
 
-  @JsonProperty
-  private String userId;
+    @JsonProperty
+    private String userId;
+
+    @JsonProperty
+    private String name;
 
 }

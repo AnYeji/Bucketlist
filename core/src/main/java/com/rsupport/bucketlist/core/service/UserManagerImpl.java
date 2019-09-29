@@ -3,8 +3,8 @@ package com.rsupport.bucketlist.core.service;
 import com.rsupport.bucketlist.core.domain.User;
 import com.rsupport.bucketlist.core.repository.UserRepository;
 import com.rsupport.bucketlist.core.util.DateUtil;
-import com.rsupport.bucketlist.core.vo.HostSigninRequestVO;
-import com.rsupport.bucketlist.core.vo.HostSignupRequestVO;
+import com.rsupport.bucketlist.core.vo.SigninRequestVO;
+import com.rsupport.bucketlist.core.vo.SignupRequestVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,7 @@ public class UserManagerImpl implements UserManager {
 
   @Override
   @Transactional
-  public User signup(HostSignupRequestVO requestVO) {
+  public User signup(SignupRequestVO requestVO) {
     User user = new User();
     user.setEmail(requestVO.getEmail());
     user.setAccountType(requestVO.getAccountType());
@@ -31,9 +31,14 @@ public class UserManagerImpl implements UserManager {
 
   @Override
   @Transactional
-  public User signin(HostSigninRequestVO requestVO) {
+  public User signin(SigninRequestVO requestVO) {
     User user = userRepository.getOne(requestVO.getUserId());
     user.setLastLoginDate(DateUtil.getDate());
     return userRepository.save(user);
+  }
+
+  @Override
+  public void deleteById(String userId) {
+    userRepository.deleteById(userId);
   }
 }
