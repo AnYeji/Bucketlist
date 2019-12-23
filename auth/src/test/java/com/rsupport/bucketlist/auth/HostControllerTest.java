@@ -16,6 +16,7 @@ import com.rsupport.bucketlist.auth.vo.CompleteBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.PinBucketlistRequestVO;
 import com.rsupport.bucketlist.core.repository.CategoryRepository;
 import com.rsupport.bucketlist.core.service.BucketlistManager;
+import com.rsupport.bucketlist.core.util.DateUtil;
 import com.rsupport.bucketlist.core.util.JwtUtils;
 import com.rsupport.bucketlist.core.vo.HostSignInRequestVO;
 import com.rsupport.bucketlist.core.vo.HostSignUpRequestVO;
@@ -24,6 +25,7 @@ import com.rsupport.bucketlist.core.vo.ModifyCategoryPriorityRequestVO;
 import com.rsupport.bucketlist.core.vo.RemoveCategoryRequestVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -201,6 +203,17 @@ public class HostControllerTest {
   public void testDDay() throws Exception {
     User user = new User();
     user = userRepository.save(user);
+
+    Category category = new Category();
+    category = categoryRepository.save(category);
+
+    Bucketlist bucketlist = new Bucketlist();
+    bucketlist.setTitle("세계일주");
+    bucketlist.setStatus("1");
+    bucketlist.setDDate(DateUtils.addDays(DateUtil.getDate(), 100));
+    bucketlist.setUser(user);
+    bucketlist.setCategory(category);
+    bucketlistRepository.save(bucketlist);
 
     String accessToken = jwtUtils.createAccessToken(user.getId());
 
