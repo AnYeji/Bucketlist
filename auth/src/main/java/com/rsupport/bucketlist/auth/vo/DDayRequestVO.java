@@ -11,6 +11,4 @@ public class DDayRequestVO {
   @JsonProperty
   private String userId;
 
-  /*@JsonProperty("token")
-  private String token;*/
 }

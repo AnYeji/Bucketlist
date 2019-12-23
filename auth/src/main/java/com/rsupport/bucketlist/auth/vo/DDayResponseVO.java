@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rsupport.bucketlist.core.base.BaseResponseVO;
 import com.rsupport.bucketlist.core.constants.ApiReturnCodes;
 import com.rsupport.bucketlist.core.domain.Bucketlist;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -14,14 +16,24 @@ import java.util.List;
 public class DDayResponseVO extends BaseResponseVO {
 
   @JsonProperty
-  private List<Bucketlist> bucketlists;
+  private List<DDayVO> dDayBucketlists;
 
-  public DDayResponseVO(String returnCode) {
-    super(returnCode);
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class DDayVO {
+
+    @JsonProperty
+    private int day;
+
+    @JsonProperty
+    private List<Bucketlist> bucketlists;
+
   }
 
-  public DDayResponseVO(List<Bucketlist> bucketlists) {
+  public DDayResponseVO(List<DDayVO> dDayBucketlists) {
     super(ApiReturnCodes.OK);
-    this.bucketlists = bucketlists;
+    this.dDayBucketlists = dDayBucketlists;
   }
 }

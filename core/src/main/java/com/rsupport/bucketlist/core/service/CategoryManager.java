@@ -1,16 +1,23 @@
 package com.rsupport.bucketlist.core.service;
 
 import com.rsupport.bucketlist.core.domain.Category;
-import com.rsupport.bucketlist.core.vo.ModifyCategoryRequestVO;
+import com.rsupport.bucketlist.core.vo.ModifyCategoryNameRequestVO;
+import com.rsupport.bucketlist.core.vo.ModifyCategoryPriorityRequestVO;
+import com.rsupport.bucketlist.core.vo.RemoveCategoryRequestVO;
+
+import java.util.List;
 
 public interface CategoryManager {
 
-  String getLastCategoryId();
+  void save(Category category);
 
-  Category getCategoryByName(String name);
+  int getLastPriorityCategory(String userId);
 
-  void modify(ModifyCategoryRequestVO requestVO);
+  void modifyName(ModifyCategoryNameRequestVO requestVO);
 
-  void remove(String categoryId);
+  void modifyPriority(ModifyCategoryPriorityRequestVO requestVO);
 
+  void remove(RemoveCategoryRequestVO requestVO);
+
+  List<Category> getCategoryListByUserId(String userId);
 }

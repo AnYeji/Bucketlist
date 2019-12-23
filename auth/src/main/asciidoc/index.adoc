@@ -59,6 +59,50 @@ use of HTTP status codes.
 |===
 
 
+== 회원가입 여부 체크 [post]
+
+=== request
+
+include::{snippets}/test-sign-up-check/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-sign-up-check/http-response.adoc[]
+
+
+== 회원가입 [post]
+
+=== request
+
+include::{snippets}/test-sign-up/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-sign-up/http-response.adoc[]
+
+
+== 로그인 [post]
+
+=== request
+
+include::{snippets}/test-sign-in/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-sign-in/http-response.adoc[]
+
+
+== 프로필 생성 [post]
+
+=== request
+
+include::{snippets}/test-create-profile/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-create-profile/http-response.adoc[]
+
+
 == 버킷리스트 목록 조회 [get]
 
 === request
@@ -81,8 +125,6 @@ include::{snippets}/test-d-day/http-request.adoc[]
 include::{snippets}/test-d-day/http-response.adoc[]
 
 
-
-////
 == 버킷리스트 완료 [post]
 
 === request
@@ -103,7 +145,6 @@ include::{snippets}/test-pin-bucketlist/http-request.adoc[]
 === response
 
 include::{snippets}/test-pin-bucketlist/http-response.adoc[]
-////
 
 
 == 버킷리스트 등록 전 [get]
@@ -128,12 +169,122 @@ include::{snippets}/test-write/http-request.adoc[]
 include::{snippets}/test-write/http-response.adoc[]
 
 
-== 버킷리스트 이미지 업로드 [post]
+== 버킷리스트 상세 [get]
 
 === request
 
-include::{snippets}/test-image-upload/http-request.adoc[]
+include::{snippets}/test-get-bucketlist/http-request.adoc[]
 
 === response
 
-include::{snippets}/test-image-upload/http-response.adoc[]
+include::{snippets}/test-get-bucketlist/http-response.adoc[]
+
+
+== 버킷리스트 수정 [post]
+
+=== request
+
+include::{snippets}/test-modify-bucketlist/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-modify-bucketlist/http-response.adoc[]
+
+
+== 버킷리스트 삭제 [delete]
+
+=== request
+
+include::{snippets}/test-remove-bucketlist/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-remove-bucketlist/http-response.adoc[]
+
+
+== 마이페이지 [get]
+
+=== request
+
+include::{snippets}/test-my-page/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-my-page/http-response.adoc[]
+
+
+== 카테고리 상세 [get]
+
+=== request
+
+include::{snippets}/test-get-category/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-get-category/http-response.adoc[]
+
+
+== 카테고리 추가 [post]
+
+=== request
+
+include::{snippets}/test-create-category/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-create-category/http-response.adoc[]
+
+
+== 카테고리 이름 변경 [post]
+
+=== request
+
+include::{snippets}/test-modify-name-category/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-modify-name-category/http-response.adoc[]
+
+
+== 카테고리 순서 변경 [post]
+
+=== request
+
+include::{snippets}/test-modify-priority-category/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-modify-priority-category/http-response.adoc[]
+
+
+== 카테고리 삭제 [delete]
+
+=== request
+
+include::{snippets}/test-remove-category/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-remove-category/http-response.adoc[]
+
+
+== 회원탈퇴 [delete]
+
+=== request
+
+include::{snippets}/test-withdrawal/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-withdrawal/http-response.adoc[]
+
+
+== 토큰 재발급 [post]
+
+=== request
+
+include::{snippets}/test-refresh-token/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-refresh-token/http-response.adoc[]

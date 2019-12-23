@@ -2,9 +2,13 @@ package com.rsupport.bucketlist.core.repository;
 
 import com.rsupport.bucketlist.core.domain.Category;
 
+import java.util.List;
+
 public interface CategoryRepositoryCustom {
 
-  String getLastCatoryId();
+  Category getDefaultCategory(String userId);
 
-  Category getCategoryByName(String name);
+  int getLastPriorityCategory(String userId);
+
+  List<Category> getCategoryListByUserId(String userId);
 }

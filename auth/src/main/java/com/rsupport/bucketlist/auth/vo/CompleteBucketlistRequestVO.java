@@ -9,5 +9,8 @@ import lombok.Setter;
 public class CompleteBucketlistRequestVO {
 
   @JsonProperty
+  private String userId;
+
+  @JsonProperty
   private String bucketlistId;
 }

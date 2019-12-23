@@ -6,11 +6,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ModifyCategoryRequestVO {
+public class HostSignUpRequestVO {
 
-    @JsonProperty
-    private String categoryId;
+  @JsonProperty
+  private String email;
 
-    @JsonProperty
-    private int categoryPriority;
 }

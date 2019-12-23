@@ -24,7 +24,7 @@ public class CacheConfig implements CachingConfigurer {
 
   public static final String REFRESH_TOKEN = "refreshToken";
 
-  @Bean(EHCACHE_MANAGER_NAME)
+  @Bean(name = EHCACHE_MANAGER_NAME)
   public CacheManager cacheManager() {
     return new EhCacheCacheManager(ehCacheManager().getObject());
   }

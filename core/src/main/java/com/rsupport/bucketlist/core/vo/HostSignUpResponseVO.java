@@ -9,13 +9,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SignupResponseVO extends BaseResponseVO {
+public class HostSignUpResponseVO extends BaseResponseVO {
 
-  @JsonProperty("user_id")
+  @JsonProperty
   private String userId;
 
-  public SignupResponseVO(User user) {
+  public HostSignUpResponseVO(User user) {
     super(ApiReturnCodes.OK);
-    this.userId = userId;
+    this.userId = user.getId();
   }
 }

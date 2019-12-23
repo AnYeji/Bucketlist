@@ -1,24 +1,29 @@
 package com.rsupport.bucketlist.auth.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
+
+  @Value("${storage.path}")
+  private String storagePath;
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.
+    /*registry.
             addResourceHandler("/swagger-ui.html")
             .addResourceLocations("classpath:/META-INF/resources/");
     registry.
             addResourceHandler("/webjars/**")
-            .addResourceLocations("classpath:/META-INF/resources/webjars/");
+            .addResourceLocations("classpath:/META-INF/resources/webjars/");*/
     registry.
-            addResourceHandler("/static/**")
+            addResourceHandler("/**")
+            .addResourceLocations("file:///" + storagePath + "/");
+    registry
+            .addResourceHandler("/static/**")
             .addResourceLocations("classpath:/static/");
   }
 }

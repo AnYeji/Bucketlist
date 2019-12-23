@@ -1,5 +1,6 @@
 package com.rsupport.bucketlist.core.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,6 +9,19 @@ public class DateUtil {
 
   public static Date getDate() {
     return new Date();
+  }
+
+  public static Date getToday() {
+    Date today = null;
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+    try {
+      today = df.parse(getDateString("yyyy-MM-dd"));
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+
+    return today;
   }
 
   public static String getDateString(String format) {
@@ -28,7 +42,6 @@ public class DateUtil {
     long diffTime = getDateDiff(source, target);
     return (int)(diffTime / evalDay);
   }
-
 
   public static Date addDays(Date date, int amount) {
     Calendar c = Calendar.getInstance();

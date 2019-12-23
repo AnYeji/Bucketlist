@@ -6,11 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HomeRequestVO {
+public class WithdrawalRequestVO {
 
-  @JsonProperty
-  private String userId;
-
-  /*@JsonProperty("token")
-  private String token;*/
+    @JsonProperty
+    private String userId;
 }

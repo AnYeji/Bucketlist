@@ -11,11 +11,12 @@ import java.util.UUID;
 public class FileUploadServiceImpl implements FileUploadService {
 
   @Override
-  public void upload(MultipartFile file) {
+  public String upload(MultipartFile file) {
     String extension = FileUtil.getExtension(file.getOriginalFilename());
     String saveFileName = String.format("%s.%s", UUID.randomUUID().toString(), extension);
     String uploadDate = DateUtil.getDateString("yyyyMMdd");
 
-    FileUtil.upload(file, String.format("%s/%s", "D:\\dev-bucketlist\\workspace\\bucketlist\\storage", uploadDate), saveFileName);
+    FileUtil.upload(file, String.format("%s/%s", "/DATA/WEB/mybury/storage", uploadDate), saveFileName);
+    return String.format("/%s/%s", uploadDate, saveFileName);
   }
 }

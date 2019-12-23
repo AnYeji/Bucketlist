@@ -28,4 +28,9 @@ public class BaseResponseVO {
   public BaseResponseVO(String returnCode) {
     this.returnCode = returnCode;
   }
+
+  public BaseResponseVO(String returnCode, String message) {
+    this.returnCode = returnCode;
+    this.message = message;
+  }
 }

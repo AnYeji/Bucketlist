@@ -2,30 +2,29 @@ package com.rsupport.bucketlist.auth.constants;
 
 public class ApiUriConstants {
 
-  public static final String HOST = "/host";
+  public static final String SIGNUP_CHECK = "/signup_check";
+  public static final String SIGNUP = "/signup";
+  public static final String SIGNIN = "/signin";
+  public static final String WITHDRAWAL = "/withdrawal";
 
-  public static final String HOST_SIGNUP_CHECK = HOST + "/signup_check";
-  public static final String HOST_SIGNUP = HOST + "/signup";
-  public static final String HOST_SIGNIN = HOST + "/signin";
-  public static final String HOST_LOGOUT = HOST + "/logout";
+  public static final String HOME = "/home";
+  public static final String D_DAY = "/dDay";
+  public static final String BUCKETLIST_COMPLETE = "/complete";
+  public static final String BUCKETLIST_PIN = "/pin";
 
-  public static final String HOST_HOME = HOST + "/home";
-  public static final String HOST_D_DAY = HOST + "/dDay";
-  public static final String HOST_BUCKETLIST_COMPLETE = HOST + "/complete";
-  public static final String HOST_BUCKETLIST_PIN = HOST + "/pin";
+  public static final String BUCKETLIST_BEFORE_WRITE = "/beforeWrite";
+  public static final String BUCKETLIST_WRITE = "/write";
+  public static final String BUCKETLIST_CRUD = "/bucketlist/{id}";
 
-  public static final String HOST_BUCKETLIST_BEFORE_WRITE = HOST + "/beforeWrite";
-  public static final String HOST_BUCKETLIST_WRITE = HOST + "/write";
-  public static final String HOST_BUCKETLIST_CRUD = HOST + "/bucketlist/{id}";
+  public static final String PROFILE = "/profile";
+  public static final String MYPAGE = "/mypage";
+  public static final String CATEGORY = "/category";
+  public static final String CATEGORY_EDIT_NAME = "/category/edit_name";
+  public static final String CATEGORY_EDIT_PRIORITY = "/category/edit_priority";
 
-  public static final String HOST_IMAGE_UPLOAD = HOST + "/imageUpload";
+  public static final String TERMS_OF_USE = "/terms_of_use";
+  public static final String PRIVACY_POLICY = "/privacy_policy";
 
-  public static final String HOST_MYPAGE = HOST + "/mypage";
-  public static final String HOST_CATEGORY = HOST + "/category";
-  public static final String HOST_PROFILE = HOST + "/profile";
-  public static final String HOST_ACCOUNT = HOST + "/account";
-
-  public static final String HOST_RANKING = HOST + "/ranking";
-  public static final String HOST_SEARCH = HOST + "/search";
+  public static final String REFRESH_TOKEN = "/refresh_token";
 
 }

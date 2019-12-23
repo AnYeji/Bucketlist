@@ -10,5 +10,8 @@ import lombok.Setter;
 public class PinBucketlistRequestVO {
 
   @JsonProperty
+  private String userId;
+
+  @JsonProperty
   private String bucketlistId;
 }

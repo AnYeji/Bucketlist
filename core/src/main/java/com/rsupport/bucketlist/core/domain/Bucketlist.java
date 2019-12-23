@@ -50,7 +50,6 @@ public class Bucketlist {
   private boolean pin;
 
   @Column
-  @ColumnDefault("0")
   private String status;
 
   @Column(name = "d_date")

@@ -21,7 +21,7 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "mt_category", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "user_id"}))
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(value = {"id", "user"})
+@JsonIgnoreProperties(value = {"user"})
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
 public class Category {
 

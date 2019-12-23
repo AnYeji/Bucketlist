@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository("categoryRepository")
 public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
@@ -15,22 +16,36 @@ public class CategoryRepositoryImpl implements CategoryRepositoryCustom {
   private EntityManager entityManager;
 
   @Override
-  public String getLastCatoryId() {
+  public Category getDefaultCategory(String userId) {
     JPAQuery query = new JPAQuery(entityManager);
     QCategory category = QCategory.category;
 
-    query.from(category);
+    query.from(category)
+            .where(category.user().id.eq(userId)
+                    .and(category.name.eq("없음")));
 
-    return query.singleResult(category.id);
+    return query.uniqueResult(category);
   }
 
   @Override
-  public Category getCategoryByName(String name) {
+  public int getLastPriorityCategory(String userId) {
     JPAQuery query = new JPAQuery(entityManager);
     QCategory category = QCategory.category;
 
-    query.from(category).where(category.name.eq(name));
+    query.from(category).where(category.user().id.eq(userId));
 
-    return query.uniqueResult(category);
+    return query.uniqueResult(category.priority.max());
+  }
+
+  @Override
+  public List<Category> getCategoryListByUserId(String userId) {
+    JPAQuery query = new JPAQuery(entityManager);
+    QCategory category = QCategory.category;
+
+    query.from(category)
+            .where(category.user().id.eq(userId))
+            .orderBy(category.priority.asc());
+
+    return query.list(category);
   }
 }

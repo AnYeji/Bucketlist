@@ -1,16 +1,21 @@
 package com.rsupport.bucketlist.core.service;
 
 import com.rsupport.bucketlist.core.domain.User;
-import com.rsupport.bucketlist.core.vo.SigninRequestVO;
-import com.rsupport.bucketlist.core.vo.SignupRequestVO;
+import com.rsupport.bucketlist.core.vo.CreateProfileRequestVO;
+import com.rsupport.bucketlist.core.vo.HostSignInRequestVO;
+import com.rsupport.bucketlist.core.vo.HostSignUpRequestVO;
 
 public interface UserManager {
 
   User getUserById(String userId);
 
-  User signup(SignupRequestVO requestVO);
+  User getUserByEmail(String email);
 
-  User signin(SigninRequestVO requestVO);
+  User signup(HostSignUpRequestVO requestVO);
 
-  void deleteById(String userId);
+  User signin(HostSignInRequestVO requestVO);
+
+  void createProfile(CreateProfileRequestVO requestVO);
+
+  void remove(String userId);
 }

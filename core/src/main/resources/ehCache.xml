@@ -13,4 +13,13 @@
             timeToLiveSeconds="120"
             memoryStoreEvictionPolicy="LRU"/>
 
+    <cache name="refreshToken"
+           eternal="false"
+           maxElementsInMemory="1000"
+           overflowToDisk="false"
+           diskPersistent="false"
+           timeToIdleSeconds="43200"
+           timeToLiveSeconds="43200"
+           memoryStoreEvictionPolicy="LRU"/>
+
 </ehcache>

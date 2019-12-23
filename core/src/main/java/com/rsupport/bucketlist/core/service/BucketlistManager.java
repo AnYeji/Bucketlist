@@ -1,20 +1,32 @@
 package com.rsupport.bucketlist.core.service;
 
 import com.rsupport.bucketlist.core.domain.Bucketlist;
+import com.rsupport.bucketlist.core.vo.BucketlistModifyRequestVO;
+import com.rsupport.bucketlist.core.vo.BucketlistWriteRequestVO;
+import com.rsupport.bucketlist.core.vo.HomeRequestVO;
 
+import java.util.Date;
 import java.util.List;
 
 public interface BucketlistManager {
 
-  List<Bucketlist> getBucketlistsByUserId(String userId);
+  List<Bucketlist> getBucketlists(HomeRequestVO requestVO);
 
-  boolean existsPopupBucketlist(String userId, List<Integer> popupPeriodList);
+  List<Bucketlist> getBucketlistByCategoryId(String categoryId);
+
+  boolean existsPopupBucketlist(String userId, int popupPeriod);
 
   List<Bucketlist> getDDayBucketlist(String userId);
 
+  List<Bucketlist> getBucketlistsByDDate(Date date);
+
   Bucketlist getBucketlistById(String bucketlistId);
 
-  Bucketlist saveBucketlist(Bucketlist bucketlist);
+  void writeBucketlist(BucketlistWriteRequestVO requestVO);
+
+  void saveBucketlist(Bucketlist bucketlist);
+
+  void modifyBucketlist(BucketlistModifyRequestVO requestVO);
 
   void deleteBucketlist(String bucketlistId);
 

@@ -1,10 +1,9 @@
-package com.rsupport.bucketlist.auth.vo;
+package com.rsupport.bucketlist.core.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rsupport.bucketlist.core.base.BaseResponseVO;
-import com.rsupport.bucketlist.core.constants.ApiReturnCodes;
-import com.rsupport.bucketlist.core.domain.Bucketlist;
 import com.rsupport.bucketlist.core.domain.Category;
-import com.rsupport.bucketlist.core.domain.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +26,22 @@ public class MyPageResponseVO extends BaseResponseVO {
 
   private int dDayCount;
 
-  private Map<String, Integer> categoryMap = new HashMap<>();
+  private List<CategoryVO> categoryList;
+
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class CategoryVO {
+
+    @JsonProperty
+    private String id;
+
+    @JsonProperty
+    private String name;
+
+    @JsonProperty
+    private int count;
+  }
 
 }
