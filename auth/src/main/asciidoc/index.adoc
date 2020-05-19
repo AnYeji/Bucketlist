@@ -125,7 +125,7 @@ include::{snippets}/test-d-day/http-request.adoc[]
 include::{snippets}/test-d-day/http-response.adoc[]
 
 
-== 버킷리스트 완료 [post]
+== 버킷리스트 달성 [post]
 
 === request
 
@@ -134,6 +134,17 @@ include::{snippets}/test-complete-bucketlist/http-request.adoc[]
 === response
 
 include::{snippets}/test-complete-bucketlist/http-response.adoc[]
+
+
+== 버킷리스트 달성 취소 [post]
+
+=== request
+
+include::{snippets}/test-cancel-bucketlist/http-request.adoc[]
+
+=== response
+
+include::{snippets}/test-cancel-bucketlist/http-response.adoc[]
 
 
 == 버킷리스트 상단 고정 / 고정해제 [post]

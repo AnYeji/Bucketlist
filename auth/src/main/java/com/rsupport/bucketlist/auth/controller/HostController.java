@@ -3,6 +3,7 @@ package com.rsupport.bucketlist.auth.controller;
 import com.rsupport.bucketlist.auth.annotation.AccessTokenCheck;
 import com.rsupport.bucketlist.auth.constants.ApiUriConstants;
 import com.rsupport.bucketlist.auth.vo.BucketlistRemoveRequestVO;
+import com.rsupport.bucketlist.auth.vo.CancelBucketlistRequestVO;
 import com.rsupport.bucketlist.auth.vo.CreateCategoryRequestVO;
 import com.rsupport.bucketlist.core.vo.ModifyCategoryNameRequestVO;
 import com.rsupport.bucketlist.core.vo.BucketlistModifyRequestVO;
@@ -17,7 +18,7 @@ import com.rsupport.bucketlist.core.constants.CommonCodes;
 import com.rsupport.bucketlist.auth.vo.BeforeWriteResponseVO;
 import com.rsupport.bucketlist.auth.vo.BucketlistViewResponseVO;
 import com.rsupport.bucketlist.core.vo.BucketlistWriteRequestVO;
-import com.rsupport.bucketlist.auth.vo.DDayRequestVO;
+import com.rsupport.bucketlist.core.vo.DDayRequestVO;
 import com.rsupport.bucketlist.auth.vo.DDayResponseVO;
 import com.rsupport.bucketlist.auth.vo.CompleteBucketlistRequestVO;
 import com.rsupport.bucketlist.core.vo.HomeRequestVO;
@@ -101,10 +102,10 @@ public class HostController {
     List<Bucketlist> bucketlists = bucketlistManager.getBucketlists(requestVO);
 
     boolean popupYn = false;
-    String popupPeriodStr = "1,2,3,7,30";
-    for(String popupPeriod : popupPeriodStr.split(",")){
+    String popupPeriodStr = "1,7";
+    for (String popupPeriod : popupPeriodStr.split(",")) {
       popupYn = bucketlistManager.existsPopupBucketlist(requestVO.getUserId(), Integer.parseInt(popupPeriod));
-      if(popupYn)
+      if (popupYn)
         break;
     }
     return new HomeResponseVO(bucketlists, popupYn);
@@ -114,11 +115,11 @@ public class HostController {
   @GetMapping(value = ApiUriConstants.D_DAY)
   public DDayResponseVO dDay(DDayRequestVO requestVO) {
     List<DDayResponseVO.DDayVO> dDayVOList = new ArrayList<>();
-    List<Bucketlist> dDayBucketlists = bucketlistManager.getDDayBucketlist(requestVO.getUserId());
+    List<Bucketlist> dDayBucketlists = bucketlistManager.getDDayBucketlist(requestVO.getUserId(), requestVO.getFilter());
 
     int day = -1;
-    for(Bucketlist bucketlist : dDayBucketlists) {
-      if(day != bucketlist.getDDay()) {
+    for (Bucketlist bucketlist : dDayBucketlists) {
+      if (day != bucketlist.getDDay()) {
         List<Bucketlist> bucketlists = bucketlistManager.getBucketlistsByDDate(bucketlist.getDDate());
         DDayResponseVO.DDayVO dDayVO = new DDayResponseVO.DDayVO(bucketlist.getDDay(), bucketlists);
         dDayVOList.add(dDayVO);
@@ -144,8 +145,21 @@ public class HostController {
   }
 
   @AccessTokenCheck
+  @PostMapping(value = ApiUriConstants.BUCKETLIST_CANCEL)
+  public BaseResponseVO cancelBucketlist(@RequestBody CancelBucketlistRequestVO requestVO) {
+    Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
+    bucketlist.setUserCount(bucketlist.getUserCount() - 1);
+
+    if (bucketlist.getUserCount() < bucketlist.getGoalCount())
+      bucketlist.setStatus(CommonCodes.BucketlistStatus.STARTED);
+
+    bucketlistManager.saveBucketlist(bucketlist);
+    return BaseResponseVO.ok();
+  }
+
+  @AccessTokenCheck
   @PostMapping(value = ApiUriConstants.BUCKETLIST_PIN)
-  public BaseResponseVO pinBucketlist(@RequestBody PinBucketlistRequestVO requestVO) {
+  public BaseResponseVO pin(@RequestBody PinBucketlistRequestVO requestVO) {
     Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
     if (bucketlist.isPin()) {
       bucketlist.setPin(false);
@@ -208,7 +222,7 @@ public class HostController {
     int completedCount = bucketlistManager.getCompletedBucketlistCount(user.getId());
     responseVO.setCompletedCount(completedCount);
 
-    int dDayCount = bucketlistManager.getDDayBucketlist(user.getId()).size();
+    int dDayCount = bucketlistManager.getDDayBucketlist(user.getId(), null).size();
     responseVO.setDDayCount(dDayCount);
 
     List<MyPageResponseVO.CategoryVO> categoryList = setCategoryList(user);
@@ -221,10 +235,10 @@ public class HostController {
   private List<MyPageResponseVO.CategoryVO> setCategoryList(User user) {
     List<MyPageResponseVO.CategoryVO> categoryList = new ArrayList<>();
     List<Category> userCategoryList = categoryManager.getCategoryListByUserId(user.getId());
-    for(Category category : userCategoryList) {
+    for (Category category : userCategoryList) {
       int categoryCount = 0;
-      for(Bucketlist bucketlist : user.getBucketlists()) {
-        if(category.equals(bucketlist.getCategory())) {
+      for (Bucketlist bucketlist : user.getBucketlists()) {
+        if (category.equals(bucketlist.getCategory())) {
           categoryCount++;
         }
       }

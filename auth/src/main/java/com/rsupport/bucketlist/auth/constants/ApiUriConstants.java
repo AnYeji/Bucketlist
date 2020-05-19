@@ -10,6 +10,7 @@ public class ApiUriConstants {
   public static final String HOME = "/home";
   public static final String D_DAY = "/dDay";
   public static final String BUCKETLIST_COMPLETE = "/complete";
+  public static final String BUCKETLIST_CANCEL = "/cancel";
   public static final String BUCKETLIST_PIN = "/pin";
 
   public static final String BUCKETLIST_BEFORE_WRITE = "/beforeWrite";

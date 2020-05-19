@@ -178,6 +178,7 @@ public class HostControllerTest {
     Bucketlist bucketlist = new Bucketlist();
     bucketlist.setTitle("세계일주");
     bucketlist.setStatus("1");
+    bucketlist.setDDate(DateUtils.addDays(DateUtil.getDate(), 3));
     bucketlist.setUser(user);
     bucketlist.setCategory(category);
     bucketlistRepository.save(bucketlist);
@@ -210,7 +211,7 @@ public class HostControllerTest {
     Bucketlist bucketlist = new Bucketlist();
     bucketlist.setTitle("세계일주");
     bucketlist.setStatus("1");
-    bucketlist.setDDate(DateUtils.addDays(DateUtil.getDate(), 100));
+    bucketlist.setDDate(DateUtils.addDays(DateUtil.getDate(), 3));
     bucketlist.setUser(user);
     bucketlist.setCategory(category);
     bucketlistRepository.save(bucketlist);
@@ -220,6 +221,7 @@ public class HostControllerTest {
     this.mockMvc.perform(get(ApiUriConstants.D_DAY)
             .header("X-Auth-Token", accessToken)
             .param("userId", user.getId())
+            .param("filter", "minus")
             .accept(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk())
@@ -240,6 +242,28 @@ public class HostControllerTest {
     requestVO.setBucketlistId(bucketlistId);
 
     this.mockMvc.perform(post(ApiUriConstants.BUCKETLIST_COMPLETE)
+            .header("X-Auth-Token", accessToken)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(requestVO)))
+            .andExpect(status().isOk())
+            /*.andDo(document("host-completeBucketlist"))*/;
+  }
+
+  @Test
+  public void testCancelBucketlist() throws Exception {
+    User user = new User();
+    user = userRepository.save(user);
+
+    String accessToken = jwtUtils.createAccessToken(user.getId());
+
+    CompleteBucketlistRequestVO requestVO = new CompleteBucketlistRequestVO();
+    requestVO.setUserId(user.getId());
+
+    String bucketlistId = bucketlistManager.getLastBucketlistId();
+    requestVO.setBucketlistId(bucketlistId);
+
+    this.mockMvc.perform(post(ApiUriConstants.BUCKETLIST_CANCEL)
             .header("X-Auth-Token", accessToken)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)

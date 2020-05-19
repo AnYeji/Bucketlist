@@ -9,6 +9,7 @@ import com.rsupport.bucketlist.core.repository.UserRepository;
 import com.rsupport.bucketlist.core.util.DateUtil;
 import com.rsupport.bucketlist.core.vo.BucketlistModifyRequestVO;
 import com.rsupport.bucketlist.core.vo.BucketlistWriteRequestVO;
+import com.rsupport.bucketlist.core.vo.DDayRequestVO;
 import com.rsupport.bucketlist.core.vo.HomeRequestVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,8 +64,8 @@ public class BucketlistManagerImpl implements BucketlistManager {
   }
 
   @Override
-  public List<Bucketlist> getDDayBucketlist(String userId) {
-    List<Bucketlist> bucketlists = bucketlistRepository.getDDayBucketlist(userId);
+  public List<Bucketlist> getDDayBucketlist(String userId, String filter) {
+    List<Bucketlist> bucketlists = bucketlistRepository.getDDayBucketlist(userId, filter);
 
     for(Bucketlist bucketlist : bucketlists){
       bucketlist.setDDay(DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getToday()));

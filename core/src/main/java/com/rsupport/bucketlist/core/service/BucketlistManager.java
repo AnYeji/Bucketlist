@@ -3,6 +3,7 @@ package com.rsupport.bucketlist.core.service;
 import com.rsupport.bucketlist.core.domain.Bucketlist;
 import com.rsupport.bucketlist.core.vo.BucketlistModifyRequestVO;
 import com.rsupport.bucketlist.core.vo.BucketlistWriteRequestVO;
+import com.rsupport.bucketlist.core.vo.DDayRequestVO;
 import com.rsupport.bucketlist.core.vo.HomeRequestVO;
 
 import java.util.Date;
@@ -16,7 +17,7 @@ public interface BucketlistManager {
 
   boolean existsPopupBucketlist(String userId, int popupPeriod);
 
-  List<Bucketlist> getDDayBucketlist(String userId);
+  List<Bucketlist> getDDayBucketlist(String userId, String filter );
 
   List<Bucketlist> getBucketlistsByDDate(Date date);
 

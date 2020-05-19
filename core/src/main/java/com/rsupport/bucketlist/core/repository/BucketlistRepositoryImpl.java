@@ -5,6 +5,7 @@ import com.rsupport.bucketlist.core.constants.CommonCodes;
 import com.rsupport.bucketlist.core.domain.Bucketlist;
 import com.rsupport.bucketlist.core.domain.QBucketlist;
 import com.rsupport.bucketlist.core.util.DateUtil;
+import com.rsupport.bucketlist.core.vo.DDayRequestVO;
 import com.rsupport.bucketlist.core.vo.HomeRequestVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
@@ -28,7 +29,7 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
     query.from(bucketlist)
             .where(bucketlist.user().id.eq(requestVO.getUserId()));
 
-    if(!StringUtils.isBlank(requestVO.getFilter())) {
+    if(StringUtils.isNotBlank(requestVO.getFilter())) {
       if (requestVO.getFilter().equals("started"))
         query.where(bucketlist.status.eq("1"));
 
@@ -61,16 +62,24 @@ public class BucketlistRepositoryImpl implements BucketlistRepositoryCustom {
   }
 
   @Override
-  public List<Bucketlist> getDDayBucketlist(String userId) {
+  public List<Bucketlist> getDDayBucketlist(String userId, String filter) {
     JPAQuery query = new JPAQuery(entityManager);
     QBucketlist bucketlist = QBucketlist.bucketlist;
 
     query.from(bucketlist)
             .where(bucketlist.user().id.eq(userId)
                     .and(bucketlist.status.eq(CommonCodes.BucketlistStatus.STARTED))
-                    .and(bucketlist.dDate.isNotNull())
-                    .and(bucketlist.dDate.gt(DateUtil.getDate())))
-            .orderBy(bucketlist.dDate.asc());
+                    .and(bucketlist.dDate.isNotNull()));
+
+    if(StringUtils.isNotBlank(filter)) {
+      if(StringUtils.equals(filter, "minus"))
+        query.where(bucketlist.dDate.goe(DateUtil.getDate()));
+
+      if(StringUtils.equals(filter, "plus"))
+        query.where(bucketlist.dDate.lt(DateUtil.getDate()));
+    }
+
+    query.orderBy(bucketlist.dDate.asc());
 
     return query.list(bucketlist);
   }
