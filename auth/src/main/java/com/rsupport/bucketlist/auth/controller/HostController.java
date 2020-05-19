@@ -136,7 +136,7 @@ public class HostController {
     Bucketlist bucketlist = bucketlistManager.getBucketlistById(requestVO.getBucketlistId());
     bucketlist.setUserCount(bucketlist.getUserCount() + 1);
 
-    if (bucketlist.getUserCount() == bucketlist.getGoalCount())
+    if (bucketlist.getUserCount() >= bucketlist.getGoalCount())
       bucketlist.setStatus(CommonCodes.BucketlistStatus.COMPLETED);
 
     bucketlistManager.saveBucketlist(bucketlist);

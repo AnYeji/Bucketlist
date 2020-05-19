@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BucketlistViewRequestVO extends BaseRequestVO{
+public class BucketlistViewRequestVO extends BaseRequestVO {
 
   @JsonProperty
   private String bucketlistId;

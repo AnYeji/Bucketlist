@@ -31,15 +31,15 @@ public class BucketlistModifyRequestVO extends BaseRequestVO {
 
   private String userId;
 
-  private boolean noImg1;
+  private boolean removeImg1;
 
   private MultipartFile image1;
 
-  private boolean noImg2;
+  private boolean removeImg2;
 
   private MultipartFile image2;
 
-  private boolean noImg3;
+  private boolean removeImg3;
 
   private MultipartFile image3;
 

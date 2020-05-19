@@ -2,11 +2,13 @@ package com.rsupport.bucketlist.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.rsupport.bucketlist.core.constants.ColumnEncryptionConstants;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,13 +25,13 @@ import javax.persistence.Transient;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "mt_bucketlist")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(value = {"dDate", "createdDate", "updatedDate", "user"})
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE)
-public class Bucketlist {
+public class Bucketlist extends BaseTimestampEntity<String> {
 
   @Id
   @Column
@@ -39,6 +41,7 @@ public class Bucketlist {
 
   @Lob
   @Column(nullable = false)
+  @ColumnTransformer(read = ColumnEncryptionConstants.DEC_BUCKETLIST_TITLE, write = ColumnEncryptionConstants.ENC_COLUMN)
   private String title;
 
   @Column
@@ -52,6 +55,7 @@ public class Bucketlist {
   @Column
   private String status;
 
+  @JsonIgnore
   @Column(name = "d_date")
   private Date dDate;
 
@@ -68,26 +72,25 @@ public class Bucketlist {
 
   @Lob
   @Column
+  @ColumnTransformer(read = ColumnEncryptionConstants.DEC_BUCKETLIST_MEMO, write = ColumnEncryptionConstants.ENC_COLUMN)
   private String memo;
 
   @Column(name = "img_url_1")
+  @ColumnTransformer(read = ColumnEncryptionConstants.DEC_BUCKETLIST_IMG_URL_1, write = ColumnEncryptionConstants.ENC_COLUMN)
   private String imgUrl1;
 
   @Column(name = "img_url_2")
+  @ColumnTransformer(read = ColumnEncryptionConstants.DEC_BUCKETLIST_IMG_URL_2, write = ColumnEncryptionConstants.ENC_COLUMN)
   private String imgUrl2;
 
   @Column(name = "img_url_3")
+  @ColumnTransformer(read = ColumnEncryptionConstants.DEC_BUCKETLIST_IMG_URL_3, write = ColumnEncryptionConstants.ENC_COLUMN)
   private String imgUrl3;
-
-  @Column(name = "created_dt")
-  private Date createdDate;
-
-  @Column(name = "updated_dt")
-  private Date updatedDate;
 
   @OneToOne
   private Category category;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "user_id")
   private User user;

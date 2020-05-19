@@ -10,14 +10,13 @@ import com.rsupport.bucketlist.core.vo.CreateProfileRequestVO;
 import com.rsupport.bucketlist.core.vo.HostSignInRequestVO;
 import com.rsupport.bucketlist.core.vo.HostSignUpRequestVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserManagerImpl implements UserManager {
 
-  private String authServerAddress = "http://18.213.99.39";
+  private String authServerAddress = "https://www.my-bury.com";
 
   @Autowired
   private UserRepository userRepository;
@@ -60,7 +59,7 @@ public class UserManagerImpl implements UserManager {
   @Transactional
   public User signin(HostSignInRequestVO requestVO) {
     User user = userRepository.getOne(requestVO.getUserId());
-    user.setLastLoginDate(DateUtil.getDate());
+    user.setLastLoginDt(DateUtil.getDate());
     return userRepository.save(user);
   }
 

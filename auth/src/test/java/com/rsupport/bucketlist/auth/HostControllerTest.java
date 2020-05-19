@@ -311,7 +311,7 @@ public class HostControllerTest {
             .file(mockFile2)
             .file(mockFile3)*/
             .header("X-Auth-Token", accessToken)
-            .param("title", "eat pray love")
+            .param("title", "Title!!")
             .param("open", "true")
             .param("dDate", "2019-12-25")
             .param("goalCount", "10")
@@ -333,6 +333,7 @@ public class HostControllerTest {
 
     Bucketlist bucketlist = new Bucketlist();
     bucketlist.setTitle("세계일주");
+    bucketlist.setDDate(DateUtil.addDays(DateUtil.getDate(), 10));
     bucketlist.setUser(user);
     bucketlist.setCategory(category);
     bucketlist = bucketlistRepository.save(bucketlist);
@@ -375,9 +376,9 @@ public class HostControllerTest {
             .param("dDate", "2019-12-25")
             .param("goalCount", "10")
             .param("memo", "Memo!!")
-            .param("noImg1", "true")
-            .param("noImg2", "true")
-            .param("noImg3", "true")
+            .param("removeImg1", "true")
+            .param("removeImg2", "true")
+            .param("removeImg3", "true")
             .param("categoryId", category.getId())
             .param("userId", user.getId()))
             .andExpect(status().isOk());

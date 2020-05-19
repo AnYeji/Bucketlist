@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rsupport.bucketlist.core.base.BaseResponseVO;
 import com.rsupport.bucketlist.core.constants.ApiReturnCodes;
 import com.rsupport.bucketlist.core.domain.Bucketlist;
+import com.rsupport.bucketlist.core.util.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +27,9 @@ public class BucketlistViewResponseVO extends BaseResponseVO {
   @JsonProperty
   @JsonFormat(pattern = "yyyy/MM/dd")
   private Date dDate;
+
+  @JsonProperty
+  private Integer dDay;
 
   @JsonProperty
   private int userCount;
@@ -51,6 +55,8 @@ public class BucketlistViewResponseVO extends BaseResponseVO {
     this.open = bucketlist.isOpen();
     this.category = bucketlist.getCategory().getName();
     this.dDate = bucketlist.getDDate();
+    if(bucketlist.getDDate() != null)
+      this.dDay = DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getToday());
     this.userCount = bucketlist.getUserCount();
     this.goalCount = bucketlist.getGoalCount();
     this.memo = bucketlist.getMemo();

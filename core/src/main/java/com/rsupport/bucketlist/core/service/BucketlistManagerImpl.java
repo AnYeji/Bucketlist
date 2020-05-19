@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class BucketlistManagerImpl implements BucketlistManager {
 
-  private String authServerAddress = "http://18.213.99.39";
+  private String authServerAddress = "https://www.my-bury.com";
 
   @Autowired
   private BucketlistRepository bucketlistRepository;
@@ -40,7 +40,7 @@ public class BucketlistManagerImpl implements BucketlistManager {
     List<Bucketlist> bucketlists = bucketlistRepository.getBucketlists(requestVO);
     for(Bucketlist bucketlist : bucketlists){
       if(bucketlist.getDDate() != null)
-        bucketlist.setDDay(DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getDate()));
+        bucketlist.setDDay(DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getToday()));
     }
 
     return bucketlists;
@@ -51,7 +51,7 @@ public class BucketlistManagerImpl implements BucketlistManager {
     List<Bucketlist> bucketlists = bucketlistRepository.getBucketlistByCategoryId(categoryId);
     for(Bucketlist bucketlist : bucketlists){
       if(bucketlist.getDDate() != null)
-        bucketlist.setDDay(DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getDate()));
+        bucketlist.setDDay(DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getToday()));
     }
 
     return bucketlists;
@@ -67,7 +67,7 @@ public class BucketlistManagerImpl implements BucketlistManager {
     List<Bucketlist> bucketlists = bucketlistRepository.getDDayBucketlist(userId);
 
     for(Bucketlist bucketlist : bucketlists){
-      bucketlist.setDDay(DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getDate()));
+      bucketlist.setDDay(DateUtil.getDateDiffDay(bucketlist.getDDate(), DateUtil.getToday()));
     }
 
     return bucketlists;
@@ -131,14 +131,30 @@ public class BucketlistManagerImpl implements BucketlistManager {
     bucketlist.setDDate(requestVO.getDDate());
     bucketlist.setMemo(requestVO.getMemo());
 
-    if(requestVO.isNoImg1())
-      bucketlist.setImgUrl1(null);
-
-    if(requestVO.isNoImg2())
-      bucketlist.setImgUrl2(null);
-
-    if(requestVO.isNoImg3())
+    if(requestVO.isRemoveImg3())
       bucketlist.setImgUrl3(null);
+
+    if(requestVO.isRemoveImg2()) {
+      if(bucketlist.getImgUrl3() != null) {
+        bucketlist.setImgUrl2(bucketlist.getImgUrl3());
+        bucketlist.setImgUrl3(null);
+      } else {
+        bucketlist.setImgUrl2(null);
+      }
+    }
+
+    if(requestVO.isRemoveImg1()) {
+      if(bucketlist.getImgUrl2() != null) {
+        bucketlist.setImgUrl1(bucketlist.getImgUrl2());
+        bucketlist.setImgUrl2(null);
+        if (bucketlist.getImgUrl3() != null) {
+          bucketlist.setImgUrl2(bucketlist.getImgUrl3());
+          bucketlist.setImgUrl3(null);
+        }
+      } else {
+        bucketlist.setImgUrl1(null);
+      }
+    }
 
     if (requestVO.getImage1() != null) {
       String imgUrl1 = fileUploadService.upload(requestVO.getImage1());
